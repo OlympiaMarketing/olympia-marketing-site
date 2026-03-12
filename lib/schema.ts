@@ -54,7 +54,6 @@ export function getOrganizationSchema() {
     email: "contact@olympiamarketing.com",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "18300 Dykes Road",
       addressLocality: "Estero",
       addressRegion: "FL",
       postalCode: "33928",

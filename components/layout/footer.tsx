@@ -85,7 +85,7 @@ export function Footer() {
               </Link>
               <span className="flex items-start gap-2 text-sm text-muted-foreground">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                18300 Dykes Road, Estero, FL 33928
+                Estero, FL 33928
               </span>
             </div>
 

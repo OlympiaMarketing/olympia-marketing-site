@@ -10,7 +10,6 @@ import {
   X,
   Phone,
   ChevronDown,
-  ExternalLink,
   ArrowRight,
   Globe,
 } from "lucide-react"
@@ -226,17 +225,6 @@ export function Navbar() {
                 </Link>
               )
             )}
-
-            {/* Client CRM */}
-            <a
-              href="https://app.olympiamarketing.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Client CRM
-              <ExternalLink className="h-3 w-3" />
-            </a>
 
             {/* Free Consult CTA */}
             <MagneticButton className="ml-2">
@@ -506,22 +494,6 @@ export function Navbar() {
                       </Link>
                     </motion.div>
                   ))}
-
-                {/* Client CRM */}
-                <motion.div
-                  variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <a
-                    href="https://app.olympiamarketing.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 py-3 text-2xl font-bold text-foreground hover:text-muted-foreground transition-colors"
-                  >
-                    Client CRM
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                </motion.div>
 
                 {/* CTA + Phone */}
                 <motion.div
