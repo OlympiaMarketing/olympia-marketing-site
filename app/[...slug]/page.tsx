@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import Link from "next/link"
+import { Facebook, Linkedin, Twitter } from "lucide-react"
 import {
   getPageByPath,
   getAllPages,
@@ -10,6 +11,9 @@ import {
   getPostBySlug,
 } from "@/lib/data"
 import type { Page, Post } from "@/lib/data"
+import { Breadcrumbs } from "@/components/seo/breadcrumbs"
+import { JsonLd } from "@/components/seo/json-ld"
+import { getArticleSchema, getWebPageSchema, getBreadcrumbSchema, getServiceSchema } from "@/lib/schema"
 
 // ---------------------------------------------------------------------------
 // Static generation
@@ -120,24 +124,45 @@ export default async function CatchAllPage({
 
 async function BlogPostView({ post }: { post: Post }) {
   const relatedPosts = await getRelatedPosts(post.categories, 4)
+  const postUrl = `https://olympiamarketing.com/${post.slug}`
 
   return (
     <article>
+      <JsonLd data={getArticleSchema({
+        title: post.title,
+        description: post.seo_description || post.excerpt,
+        url: postUrl,
+        datePublished: post.date,
+        author: "Zachary Katkin",
+        image: post.images?.[0],
+      })} />
+      <JsonLd data={getBreadcrumbSchema([
+        { name: "Home", url: "https://olympiamarketing.com" },
+        { name: "Blog", url: "https://olympiamarketing.com/blog" },
+        { name: post.title, url: postUrl },
+      ])} />
+
       {/* ---- Hero ---- */}
       <section className="relative overflow-hidden border-b border-border bg-card py-24 md:py-32">
         <div className="aurora-blob pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-primary/10" />
 
         <div className="relative mx-auto max-w-3xl px-6">
+          <Breadcrumbs items={[
+            { label: "Blog", href: "/blog" },
+            { label: post.title },
+          ]} />
+
           {/* Categories */}
           {post.categories.length > 0 && (
             <div className="mb-4 flex flex-wrap gap-2">
               {post.categories.map((cat) => (
-                <span
+                <Link
                   key={cat}
-                  className="rounded-full border border-primary/30 bg-primary/10 px-3 py-0.5 text-xs font-medium text-primary"
+                  href={`/blog?category=${encodeURIComponent(cat)}`}
+                  className="rounded-full border border-primary/30 bg-primary/10 px-3 py-0.5 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
                 >
                   {cat}
-                </span>
+                </Link>
               ))}
             </div>
           )}
@@ -146,26 +171,61 @@ async function BlogPostView({ post }: { post: Post }) {
             {post.title}
           </h1>
 
-          <time
-            dateTime={post.date}
-            className="mt-4 block text-sm text-muted-foreground"
-          >
-            {new Date(post.date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </time>
+          <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
+            <span>By Zachary Katkin</span>
+            <span>&middot;</span>
+            <time dateTime={post.date}>
+              {new Date(post.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+          </div>
         </div>
       </section>
 
       {/* ---- Content + Sidebar ---- */}
       <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[1fr_320px]">
         {/* Main content */}
-        <div
-          className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary prose-img:rounded-lg"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+        <div>
+          <div
+            className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary prose-img:rounded-lg"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
+
+          {/* Social sharing */}
+          <div className="mt-10 flex items-center gap-4 border-t border-border pt-6">
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Share</span>
+            <a
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+              aria-label="Share on LinkedIn"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
+            <a
+              href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(post.title)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+              aria-label="Share on X"
+            >
+              <Twitter className="h-4 w-4" />
+            </a>
+            <a
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+              aria-label="Share on Facebook"
+            >
+              <Facebook className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
 
         {/* Sidebar */}
         <aside className="space-y-8">
@@ -231,10 +291,43 @@ async function PageView({ page }: { page: Page }) {
   const caseStudies =
     page.page_type === "industry" ? await getPagesByType("case-study") : []
 
+  const pageUrl = `https://olympiamarketing.com/${page.full_path}`
+
+  // Build breadcrumb items from the full path
+  const pathParts = page.full_path.split("/")
+  const breadcrumbItems = pathParts.map((part, i) => {
+    const href = "/" + pathParts.slice(0, i + 1).join("/")
+    const label = part.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+    return i === pathParts.length - 1
+      ? { label }
+      : { label, href }
+  })
+
   return (
     <article>
+      {page.page_type === "service" ? (
+        <JsonLd data={getServiceSchema({
+          name: page.title,
+          description: page.seo_description,
+          url: pageUrl,
+        })} />
+      ) : (
+        <JsonLd data={getWebPageSchema({
+          title: page.title,
+          description: page.seo_description,
+          url: pageUrl,
+        })} />
+      )}
+      <JsonLd data={getBreadcrumbSchema([
+        { name: "Home", url: "https://olympiamarketing.com" },
+        ...pathParts.map((part, i) => ({
+          name: part.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+          url: `https://olympiamarketing.com/${pathParts.slice(0, i + 1).join("/")}`,
+        })),
+      ])} />
+
       {/* ---- Hero Section ---- */}
-      <PageHero page={page} />
+      <PageHero page={page} breadcrumbs={breadcrumbItems} />
 
       {/* ---- Main Content Area ---- */}
       <div className="mx-auto max-w-5xl px-6 py-16">
@@ -282,13 +375,14 @@ async function PageView({ page }: { page: Page }) {
 // Shared Sub-Components
 // ===========================================================================
 
-function PageHero({ page }: { page: Page }) {
+function PageHero({ page, breadcrumbs }: { page: Page; breadcrumbs?: { label: string; href?: string }[] }) {
   return (
     <section className="relative overflow-hidden border-b border-border bg-card py-24 md:py-32">
       {/* Decorative gradient blob */}
       <div className="aurora-blob pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-primary/10" />
 
       <div className="relative mx-auto max-w-5xl px-6">
+        {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
         {page.page_type !== "general" && (
           <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-widest text-primary">
             {page.page_type.replace("-", " ")}
