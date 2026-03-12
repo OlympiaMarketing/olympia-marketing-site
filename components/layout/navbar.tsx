@@ -24,7 +24,6 @@ const servicesTab1 = {
   label: "Digital & Marketing",
   items: [
     { href: "/seo", label: "SEO" },
-    { href: "/video-production", label: "Video Production" },
     { href: "/marketing-advertising-services/digital-marketing/local-seo", label: "Local SEO" },
     { href: "/marketing-advertising-services/digital-marketing", label: "Digital Marketing & PPC" },
     { href: "/marketing-advertising-services/websites", label: "Website Design" },
@@ -35,6 +34,8 @@ const servicesTab1 = {
     { href: "/marketing-advertising-services/digital-marketing/social-media-marketing", label: "Social Media Marketing" },
     { href: "/marketing-advertising-services/branding-corporate-id", label: "Branding & Corporate ID" },
     { href: "/marketing-advertising-services/digital-marketing/email-marketing", label: "Email Marketing" },
+    { href: "/marketing-advertising-services/digital-marketing/content-marketing", label: "Content Marketing" },
+    { href: "/marketing-advertising-services/fractional-cmo", label: "Fractional CMO" },
   ],
 }
 

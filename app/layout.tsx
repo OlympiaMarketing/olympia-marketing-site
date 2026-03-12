@@ -13,6 +13,7 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://olympiamarketing.com"),
   title: {
     default: "Olympia Marketing: SWFL Marketing & Advertising Experts",
     template: "%s | Olympia Marketing",
@@ -28,12 +29,21 @@ export const metadata: Metadata = {
     "PPC",
     "advertising agency",
     "olympia marketing",
+    "estero marketing agency",
+    "southwest florida marketing",
   ],
   authors: [{ name: "Zachary Katkin" }],
   openGraph: {
     type: "website",
     locale: "en_US",
     siteName: "Olympia Marketing",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@olympiamarket",
+  },
+  alternates: {
+    canonical: "/",
   },
 }
 
