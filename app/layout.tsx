@@ -5,6 +5,8 @@ import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
 import { ScrollProgress } from "@/components/animations/scroll-progress"
 import { StickyCta } from "@/components/layout/sticky-cta"
+import { JsonLd } from "@/components/seo/json-ld"
+import { getOrganizationSchema, getWebSiteSchema } from "@/lib/schema"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -48,6 +50,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <JsonLd data={getOrganizationSchema()} />
+        <JsonLd data={getWebSiteSchema()} />
+      </head>
       <body className="noise-bg font-sans antialiased">
         <ScrollProgress />
         <Navbar />

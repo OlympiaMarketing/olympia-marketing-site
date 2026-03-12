@@ -1,0 +1,104 @@
+[
+  {
+    "term_id": "82",
+    "name": "Beauty Industry",
+    "slug": "beauty-industry",
+    "parent": ""
+  },
+  {
+    "term_id": "8",
+    "name": "Blog",
+    "slug": "blog",
+    "parent": ""
+  },
+  {
+    "term_id": "83",
+    "name": "Builders & Developers",
+    "slug": "builders-developers",
+    "parent": ""
+  },
+  {
+    "term_id": "61",
+    "name": "Case Study",
+    "slug": "case-study",
+    "parent": ""
+  },
+  {
+    "term_id": "80",
+    "name": "Client Launch",
+    "slug": "client-launch",
+    "parent": ""
+  },
+  {
+    "term_id": "38",
+    "name": "Clients",
+    "slug": "clients",
+    "parent": ""
+  },
+  {
+    "term_id": "26",
+    "name": "Digital Marketing",
+    "slug": "digital-marketing",
+    "parent": ""
+  },
+  {
+    "term_id": "97",
+    "name": "Esthetician",
+    "slug": "esthetician",
+    "parent": ""
+  },
+  {
+    "term_id": "104",
+    "name": "Hair Stylist",
+    "slug": "hair-stylist",
+    "parent": ""
+  },
+  {
+    "term_id": "81",
+    "name": "Industry",
+    "slug": "industry",
+    "parent": ""
+  },
+  {
+    "term_id": "25",
+    "name": "Marketing & Advertising",
+    "slug": "marketing-advertising",
+    "parent": ""
+  },
+  {
+    "term_id": "84",
+    "name": "Physical Therapists",
+    "slug": "physical-therapists",
+    "parent": ""
+  },
+  {
+    "term_id": "22",
+    "name": "Popular",
+    "slug": "popular",
+    "parent": ""
+  },
+  {
+    "term_id": "24",
+    "name": "Real Estate",
+    "slug": "real-estate-marketing",
+    "parent": ""
+  },
+  {
+    "term_id": "60",
+    "name": "Residency Microsites",
+    "slug": "residency-microsites",
+    "parent": ""
+  },
+  {
+    "term_id": "23",
+    "name": "SEO",
+    "slug": "seo",
+    "parent": ""
+  },
+  {
+    "term_id": "1",
+    "name": "Uncategorized",
+    "slug": "uncategorized",
+    "parent": ""
+  }
+]

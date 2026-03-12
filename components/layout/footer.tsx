@@ -1,13 +1,25 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Phone, Mail } from "lucide-react"
+import { Phone, Mail, MapPin, Facebook, Youtube, Twitter } from "lucide-react"
 
 const serviceLinks = [
   { href: "/marketing-advertising-services", label: "All Services" },
-  { href: "/marketing-advertising-services#seo", label: "SEO" },
-  { href: "/marketing-advertising-services#sem", label: "Search Engine Marketing" },
-  { href: "/marketing-advertising-services#social", label: "Social Media Marketing" },
-  { href: "/marketing-advertising-services#email", label: "Email Marketing" },
+  { href: "/seo", label: "SEO" },
+  { href: "/marketing-advertising-services/digital-marketing", label: "Digital Marketing & PPC" },
+  { href: "/marketing-advertising-services/websites", label: "Website Design" },
+  { href: "/marketing-advertising-services/digital-marketing/social-media-marketing", label: "Social Media Marketing" },
+  { href: "/marketing-advertising-services/digital-marketing/email-marketing", label: "Email Marketing" },
+  { href: "/marketing-advertising-services/branding-corporate-id", label: "Branding & Corporate ID" },
+  { href: "/marketing-advertising-services/digital-marketing/content-marketing", label: "Content Marketing" },
+]
+
+const industryLinks = [
+  { href: "/med-spa", label: "Medical Spa" },
+  { href: "/beauty-esthetician-marketing-advertising", label: "Salon & Beauty" },
+  { href: "/physical-therapy-marketing-advertising", label: "Physical Therapists" },
+  { href: "/real-estate-marketing-advertising", label: "Real Estate" },
+  { href: "/industries/home-service-businesses", label: "Home Services" },
+  { href: "/builders-developers", label: "Builders & Developers" },
 ]
 
 const companyLinks = [
@@ -15,15 +27,35 @@ const companyLinks = [
   { href: "/work", label: "Our Work" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
+  { href: "/schedule", label: "Schedule a Call" },
+  { href: "/privacy-policy", label: "Privacy Policy" },
+]
+
+const socialLinks = [
+  {
+    href: "https://www.facebook.com/olympiamarketingfl/",
+    label: "Facebook",
+    icon: Facebook,
+  },
+  {
+    href: "https://www.youtube.com/@OlympiaMarketing",
+    label: "YouTube",
+    icon: Youtube,
+  },
+  {
+    href: "https://x.com/olympiamarket",
+    label: "X",
+    icon: Twitter,
+  },
 ]
 
 export function Footer() {
   return (
     <footer className="border-t border-border bg-card">
       <div className="mx-auto max-w-7xl px-4 py-16 md:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-2">
             <Link href="/" className="inline-block">
               <Image
                 src="/images/logo-olympiamarketing.png"
@@ -33,7 +65,7 @@ export function Footer() {
                 className="h-9 w-auto brightness-0 invert"
               />
             </Link>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Full-Service Creative Agency with a digital-first mindset. We help businesses scale quickly with targeted, measurable marketing.
             </p>
             <div className="mt-6 flex flex-col gap-3">
@@ -45,12 +77,32 @@ export function Footer() {
                 (239) 308-4011
               </Link>
               <Link
-                href="mailto:info@olympiamarketing.com"
+                href="mailto:contact@olympiamarketing.com"
                 className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
                 <Mail className="h-4 w-4 text-primary" />
-                info@olympiamarketing.com
+                contact@olympiamarketing.com
               </Link>
+              <span className="flex items-start gap-2 text-sm text-muted-foreground">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                18300 Dykes Road, Estero, FL 33928
+              </span>
+            </div>
+
+            {/* Social links */}
+            <div className="mt-6 flex gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.href}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                  aria-label={social.label}
+                >
+                  <social.icon className="h-4 w-4" />
+                </a>
+              ))}
             </div>
           </div>
 
@@ -61,6 +113,25 @@ export function Footer() {
             </h3>
             <ul className="flex flex-col gap-2.5">
               {serviceLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Industries */}
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
+              Industries
+            </h3>
+            <ul className="flex flex-col gap-2.5">
+              {industryLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -90,22 +161,18 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
 
-          {/* CTA */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-              Ready to Grow?
-            </h3>
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              Our average client sees 10x growth in the first year. Let us show you what we can do for your business.
-            </p>
-            <Link
-              href="/contact"
-              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
-            >
-              Get Started Today
-            </Link>
+            <div className="mt-8">
+              <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
+                Ready to Grow?
+              </h3>
+              <Link
+                href="/schedule"
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
+              >
+                Free Consultation
+              </Link>
+            </div>
           </div>
         </div>
 
