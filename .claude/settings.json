@@ -1,0 +1,32 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "command": "cd $CLAUDE_PROJECT_DIR && pnpm tsc --noEmit 2>&1 | tail -5"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "osascript -e 'display notification \"Task complete\" with title \"Olympia Marketing\" sound name \"Glass\"'"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "command": "osascript -e 'display notification \"Needs your input\" with title \"Olympia Marketing\" sound name \"Ping\"'"
+          }
+        ]
+      }
+    ]
+  }
+}

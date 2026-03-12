@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# large reference files (not needed in repo)
+*.xml
+*.docx
+*.zip
+b_*/
+
+# claude ephemeral files
+.claude/execute-progress.md
+.claude/wordpress-content.md
