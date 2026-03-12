@@ -14,6 +14,7 @@ import type { Page, Post } from "@/lib/data"
 import { Breadcrumbs } from "@/components/seo/breadcrumbs"
 import { JsonLd } from "@/components/seo/json-ld"
 import { getArticleSchema, getWebPageSchema, getBreadcrumbSchema, getServiceSchema } from "@/lib/schema"
+import { renderContent } from "@/lib/markdown"
 
 // ---------------------------------------------------------------------------
 // Static generation
@@ -191,7 +192,7 @@ async function BlogPostView({ post }: { post: Post }) {
         <div>
           <div
             className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary prose-img:rounded-lg"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: renderContent(post.content) }}
           />
 
           {/* Social sharing */}
@@ -434,7 +435,7 @@ function ServiceLayout({ page, relatedPosts }: { page: Page; relatedPosts: Post[
     <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
       <div
         className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary"
-        dangerouslySetInnerHTML={{ __html: page.content }}
+        dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
       />
       <RelatedPostsSidebar posts={relatedPosts} />
     </div>
@@ -455,7 +456,7 @@ function IndustryLayout({
       <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
         <div
           className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary"
-          dangerouslySetInnerHTML={{ __html: page.content }}
+          dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
         />
         <RelatedPostsSidebar posts={relatedPosts} />
       </div>
@@ -491,7 +492,7 @@ function CaseStudyLayout({ page }: { page: Page }) {
     <div className="mx-auto max-w-3xl">
       <div
         className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary"
-        dangerouslySetInnerHTML={{ __html: page.content }}
+        dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
       />
     </div>
   )
@@ -503,7 +504,7 @@ function LocationLayout({ page, relatedPosts }: { page: Page; relatedPosts: Post
       <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
         <div
           className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary"
-          dangerouslySetInnerHTML={{ __html: page.content }}
+          dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
         />
         <RelatedPostsSidebar posts={relatedPosts} />
       </div>
@@ -516,7 +517,7 @@ function ResearchLayout({ page }: { page: Page }) {
     <div className="mx-auto max-w-3xl">
       <div
         className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary prose-p:text-base prose-p:leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: page.content }}
+        dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
       />
     </div>
   )
@@ -527,7 +528,7 @@ function FormLayout({ page }: { page: Page }) {
     <div className="mx-auto max-w-3xl">
       <div
         className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary"
-        dangerouslySetInnerHTML={{ __html: page.content }}
+        dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
       />
     </div>
   )
@@ -538,7 +539,7 @@ function UtilityLayout({ page }: { page: Page }) {
     <div className="mx-auto max-w-3xl">
       <div
         className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary prose-p:text-sm prose-p:leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: page.content }}
+        dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
       />
     </div>
   )
@@ -549,7 +550,7 @@ function GeneralLayout({ page, relatedPosts }: { page: Page; relatedPosts: Post[
     <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
       <div
         className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary"
-        dangerouslySetInnerHTML={{ __html: page.content }}
+        dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
       />
       <RelatedPostsSidebar posts={relatedPosts} />
     </div>
