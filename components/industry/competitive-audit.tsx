@@ -10,12 +10,39 @@ interface CompetitiveAuditProps {
 
 export function CompetitiveAudit({ industryName }: CompetitiveAuditProps) {
   const [url, setUrl] = useState("")
+  const [email, setEmail] = useState("")
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!url.trim()) return
-    setSubmitted(true)
+    if (!url.trim() || !email.trim()) return
+    setSubmitting(true)
+    setError(null)
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          form_type: "audit",
+          email,
+          metadata: { website_url: url, industry_name: industryName },
+        }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.error ?? "Something went wrong. Please try again.")
+      }
+
+      setSubmitted(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.")
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const auditItems = [
@@ -126,11 +153,31 @@ export function CompetitiveAudit({ industryName }: CompetitiveAuditProps) {
                         />
                       </div>
                     </div>
+                    <div>
+                      <label htmlFor="audit-email" className="sr-only">
+                        Email Address
+                      </label>
+                      <input
+                        id="audit-email"
+                        type="email"
+                        required
+                        placeholder="your@email.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full rounded-xl border border-border bg-card py-3.5 px-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      />
+                    </div>
+                    {error && (
+                      <div className="rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                        {error}
+                      </div>
+                    )}
                     <button
                       type="submit"
-                      className="group flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110 hover:shadow-lg hover:shadow-primary/25"
+                      disabled={submitting}
+                      className="group flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110 hover:shadow-lg hover:shadow-primary/25 disabled:opacity-60 disabled:pointer-events-none"
                     >
-                      Get My Free Audit
+                      {submitting ? "Submitting..." : "Get My Free Audit"}
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </button>
                   </form>

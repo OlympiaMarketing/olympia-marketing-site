@@ -74,11 +74,42 @@ const contactFaqs = [
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setSubmitted(true)
+    setSubmitting(true)
+    setError(null)
+
+    const formData = new FormData(e.currentTarget)
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          form_type: "contact",
+          name: formData.get("name"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          company: formData.get("company"),
+          message: formData.get("message"),
+        }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.error ?? "Something went wrong. Please try again.")
+      }
+
+      setSubmitted(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.")
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const inputClasses =
@@ -219,16 +250,23 @@ export function ContactForm() {
                           />
                         </div>
 
+                        {error && (
+                          <div className="rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                            {error}
+                          </div>
+                        )}
+
                         <MagneticButton className="self-start">
                           <button
                             type="submit"
-                            className="group inline-flex items-center gap-2 rounded-lg px-8 py-4 text-sm font-semibold text-white shadow-[0_4px_12px_#7C3AED50,0_12px_30px_#8B5CF640] transition-all hover:brightness-110"
+                            disabled={submitting}
+                            className="group inline-flex items-center gap-2 rounded-lg px-8 py-4 text-sm font-semibold text-white shadow-[0_4px_12px_#7C3AED50,0_12px_30px_#8B5CF640] transition-all hover:brightness-110 disabled:opacity-60 disabled:pointer-events-none"
                             style={{
                               background:
                                 "linear-gradient(180deg, #8B5CF6 0%, #6D28D9 100%)",
                             }}
                           >
-                            Send Message
+                            {submitting ? "Sending..." : "Send Message"}
                             <Send className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                           </button>
                         </MagneticButton>
