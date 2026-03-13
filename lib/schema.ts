@@ -1,5 +1,6 @@
 // JSON-LD Structured Data generators for Olympia Marketing
 // All schemas follow https://schema.org specifications
+// Updated for Google 2026 structured data requirements
 
 const SITE_URL = "https://olympiamarketing.com"
 
@@ -36,10 +37,17 @@ interface FAQItem {
   answer: string
 }
 
+interface ProfilePageInput {
+  name: string
+  description: string
+  url: string
+  image?: string
+}
+
 export function getOrganizationSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["LocalBusiness", "MarketingAgency"],
     "@id": `${SITE_URL}/#organization`,
     name: "Olympia Marketing",
     description:
@@ -47,11 +55,17 @@ export function getOrganizationSchema() {
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
-      url: `${SITE_URL}/olympia-logo.svg`,
+      url: `${SITE_URL}/images/logo-olympiamarketing.png`,
+      width: 180,
+      height: 72,
     },
-    image: `${SITE_URL}/olympia-logo.svg`,
-    telephone: "239-308-4011",
+    image: `${SITE_URL}/images/logo-olympiamarketing.png`,
+    telephone: "+1-239-308-4011",
     email: "contact@olympiamarketing.com",
+    founder: {
+      "@type": "Person",
+      name: "Zachary Katkin",
+    },
     address: {
       "@type": "PostalAddress",
       addressLocality: "Estero",
@@ -75,10 +89,14 @@ export function getOrganizationSchema() {
       },
       {
         "@type": "State",
-        name: "Southwest Florida",
+        name: "Florida",
       },
     ],
-    sameAs: [] as string[],
+    sameAs: [
+      "https://www.facebook.com/olympiamarketing",
+      "https://www.youtube.com/@olympiamarketing",
+      "https://x.com/olympiamarket",
+    ],
     priceRange: "$$",
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
@@ -86,6 +104,16 @@ export function getOrganizationSchema() {
       opens: "09:00",
       closes: "17:00",
     },
+    knowsAbout: [
+      "Search Engine Optimization",
+      "Pay-Per-Click Advertising",
+      "Social Media Marketing",
+      "Website Design",
+      "Branding",
+      "Content Marketing",
+      "Email Marketing",
+      "Public Relations",
+    ],
   }
 }
 
@@ -118,7 +146,8 @@ export function getArticleSchema(post: ArticleInput) {
     dateModified: post.dateModified ?? post.datePublished,
     author: {
       "@type": "Person",
-      name: post.author ?? "Olympia Marketing",
+      name: post.author ?? "Zachary Katkin",
+      url: `${SITE_URL}/about/our-founder`,
     },
     publisher: {
       "@type": "Organization",
@@ -126,12 +155,16 @@ export function getArticleSchema(post: ArticleInput) {
       name: "Olympia Marketing",
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/olympia-logo.svg`,
+        url: `${SITE_URL}/images/logo-olympiamarketing.png`,
       },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": post.url,
+    },
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
     },
     ...(post.image
       ? {
@@ -169,10 +202,17 @@ export function getServiceSchema(service: ServiceInput) {
       "@id": `${SITE_URL}/#organization`,
       name: service.provider ?? "Olympia Marketing",
     },
-    areaServed: {
-      "@type": "State",
-      name: "Southwest Florida",
-    },
+    areaServed: [
+      {
+        "@type": "State",
+        name: "Florida",
+      },
+      {
+        "@type": "AdministrativeArea",
+        name: "Southwest Florida",
+      },
+    ],
+    serviceType: service.name,
   }
 }
 
@@ -191,6 +231,33 @@ export function getFAQSchema(faqs: FAQItem[]) {
   }
 }
 
+/** ProfilePage schema for about/team pages (Google supported type) */
+export function getProfilePageSchema(profile: ProfilePageInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    name: profile.name,
+    description: profile.description,
+    url: profile.url,
+    mainEntity: {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+    },
+    ...(profile.image
+      ? {
+          image: {
+            "@type": "ImageObject",
+            url: profile.image,
+          },
+        }
+      : {}),
+  }
+}
+
+/**
+ * WebSite schema — no longer includes SearchAction (Sitelinks Search Box
+ * was deprecated by Google in January 2026).
+ */
 export function getWebSiteSchema() {
   return {
     "@context": "https://schema.org",
@@ -202,13 +269,24 @@ export function getWebSiteSchema() {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
     },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${SITE_URL}/search?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
+  }
+}
+
+/** CollectionPage schema for blog listing and category archives */
+export function getCollectionPageSchema(collection: {
+  name: string
+  description: string
+  url: string
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: collection.name,
+    description: collection.description,
+    url: collection.url,
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
     },
   }
 }

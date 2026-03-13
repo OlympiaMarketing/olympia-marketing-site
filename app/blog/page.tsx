@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { getAllPosts, getAllCategories } from "@/lib/data"
 import type { Post, Category } from "@/lib/data"
+import { JsonLd } from "@/components/seo/json-ld"
+import { getCollectionPageSchema } from "@/lib/schema"
 
 export const metadata: Metadata = {
   title: "Olympia Marketing Blog | Latest Insights & Tips For Success",
@@ -43,6 +45,12 @@ export default async function BlogPage({
 
   return (
     <>
+      <JsonLd data={getCollectionPageSchema({
+        name: "Olympia Marketing Blog",
+        description: "Expert perspectives on marketing, advertising, and business growth from the Olympia Marketing team.",
+        url: "https://olympiamarketing.com/blog",
+      })} />
+
       {/* ---- Hero ---- */}
       <section className="border-b border-border bg-card py-20 md:py-28">
         <div className="mx-auto max-w-6xl px-6">

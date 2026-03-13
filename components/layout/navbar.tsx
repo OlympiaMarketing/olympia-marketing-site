@@ -25,7 +25,7 @@ const servicesTab1 = {
     { href: "/seo", label: "SEO" },
     { href: "/marketing-advertising-services/digital-marketing/local-seo", label: "Local SEO" },
     { href: "/marketing-advertising-services/digital-marketing", label: "Digital Marketing & PPC" },
-    { href: "/marketing-advertising-services/websites", label: "Website Design" },
+    { href: "/marketing-advertising-services/websites", label: "Website Design & Development" },
     { href: "/marketing-advertising-services/public-relations-pr", label: "Public Relations" },
     { href: "/marketing-advertising-services/print-advertising-campaign-development", label: "Print Advertising" },
     { href: "/industries/saas-marketing", label: "SaaS Marketing" },
@@ -35,6 +35,8 @@ const servicesTab1 = {
     { href: "/marketing-advertising-services/digital-marketing/email-marketing", label: "Email Marketing" },
     { href: "/marketing-advertising-services/digital-marketing/content-marketing", label: "Content Marketing" },
     { href: "/marketing-advertising-services/fractional-cmo", label: "Fractional CMO" },
+    { href: "/marketing-advertising-services/digital-marketing/lead-management", label: "Lead Management" },
+    { href: "/reputation-management", label: "Reputation Management" },
   ],
 }
 
@@ -49,10 +51,13 @@ const servicesTab2 = {
     { href: "/marketing-advertising-services/websites/hosting-and-maintenance", label: "Hosting & Maintenance" },
     { href: "/blogging", label: "Blogging" },
     { href: "/marketing-advertising-services/websites/responsive-website-design", label: "Responsive Website Design" },
-    { href: "/marketing-advertising-services/digital-marketing/local-seo", label: "Local SEO" },
+    { href: "/marketing-advertising-services/websites/top-tier-security", label: "Top Tier Security" },
     { href: "/marketing-advertising-services/websites/fast-load-times", label: "Fast Load Times" },
     { href: "/marketing-advertising-services/marketing-plan-development", label: "Marketing Plan Development" },
     { href: "/marketing-advertising-services/websites/wordpress-development", label: "WordPress Development" },
+    { href: "/marketing-advertising-services/websites/web-app-development", label: "Web App Development" },
+    { href: "/marketing-advertising-services/direct-mail-campaigns", label: "Direct Mail Campaigns" },
+    { href: "/marketing-advertising-services/brochures-flyers-and-posters", label: "Brochures, Flyers & Posters" },
   ],
 }
 

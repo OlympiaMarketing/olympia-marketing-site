@@ -13,8 +13,13 @@ import {
 import type { Page, Post } from "@/lib/data"
 import { Breadcrumbs } from "@/components/seo/breadcrumbs"
 import { JsonLd } from "@/components/seo/json-ld"
-import { getArticleSchema, getWebPageSchema, getBreadcrumbSchema, getServiceSchema } from "@/lib/schema"
+import { getArticleSchema, getWebPageSchema, getBreadcrumbSchema, getServiceSchema, getProfilePageSchema } from "@/lib/schema"
 import { renderContent } from "@/lib/markdown"
+import { IndustryCalculator } from "@/components/industry/industry-calculator"
+import { IndustryCTA } from "@/components/industry/industry-cta"
+import { CompetitiveAudit } from "@/components/industry/competitive-audit"
+import { IndustryBenchmarks } from "@/components/industry/industry-benchmarks"
+import { getIndustryConfig } from "@/components/industry/industry-config"
 
 // ---------------------------------------------------------------------------
 // Static generation
@@ -127,6 +132,10 @@ async function BlogPostView({ post }: { post: Post }) {
   const relatedPosts = await getRelatedPosts(post.categories, 4)
   const postUrl = `https://olympiamarketing.com/${post.slug}`
 
+  // Estimate reading time (~238 words per minute average)
+  const wordCount = post.content.replace(/<[^>]*>/g, "").split(/\s+/).length
+  const readingTime = Math.max(1, Math.round(wordCount / 238))
+
   return (
     <article>
       <JsonLd data={getArticleSchema({
@@ -172,7 +181,7 @@ async function BlogPostView({ post }: { post: Post }) {
             {post.title}
           </h1>
 
-          <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
+          <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
             <span>By Zachary Katkin</span>
             <span>&middot;</span>
             <time dateTime={post.date}>
@@ -182,17 +191,34 @@ async function BlogPostView({ post }: { post: Post }) {
                 day: "numeric",
               })}
             </time>
+            <span>&middot;</span>
+            <span>{readingTime} min read</span>
           </div>
         </div>
       </section>
+
+      {/* ---- Featured Image ---- */}
+      {post.images?.[0] && (
+        <div className="mx-auto max-w-4xl px-6 -mb-8">
+          <div className="relative -mt-16 overflow-hidden rounded-xl border border-border shadow-2xl shadow-background/50">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={post.images[0]}
+              alt={post.title}
+              className="h-auto w-full object-cover"
+              loading="eager"
+            />
+          </div>
+        </div>
+      )}
 
       {/* ---- Content + Sidebar ---- */}
       <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[1fr_320px]">
         {/* Main content */}
         <div>
           <div
-            className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary prose-img:rounded-lg"
-            dangerouslySetInnerHTML={{ __html: renderContent(post.content) }}
+            className="prose-blog max-w-none"
+            dangerouslySetInnerHTML={{ __html: renderContent(post.content, post.slug) }}
           />
 
           {/* Social sharing */}
@@ -311,6 +337,13 @@ async function PageView({ page }: { page: Page }) {
           name: page.title,
           description: page.seo_description,
           url: pageUrl,
+        })} />
+      ) : page.full_path.startsWith("about") ? (
+        <JsonLd data={getProfilePageSchema({
+          name: page.title,
+          description: page.seo_description,
+          url: pageUrl,
+          image: page.images?.[0],
         })} />
       ) : (
         <JsonLd data={getWebPageSchema({
@@ -434,8 +467,8 @@ function ServiceLayout({ page, relatedPosts }: { page: Page; relatedPosts: Post[
   return (
     <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
       <div
-        className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary"
-        dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
+        className="prose-blog max-w-none"
+        dangerouslySetInnerHTML={{ __html: renderContent(page.content, page.full_path) }}
       />
       <RelatedPostsSidebar posts={relatedPosts} />
     </div>
@@ -451,15 +484,44 @@ function IndustryLayout({
   relatedPosts: Post[]
   caseStudies: Page[]
 }) {
+  const industryConfig = getIndustryConfig(page.full_path)
+
   return (
     <>
       <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
         <div
-          className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary"
-          dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
+          className="prose-blog max-w-none"
+          dangerouslySetInnerHTML={{ __html: renderContent(page.content, page.full_path) }}
         />
         <RelatedPostsSidebar posts={relatedPosts} />
       </div>
+
+      {/* Industry conversion components */}
+      {industryConfig && (
+        <div className="mt-20 space-y-16">
+          {/* ROI Calculator */}
+          <IndustryCalculator
+            config={industryConfig.calculator}
+            industryName={industryConfig.name}
+          />
+
+          {/* Industry Benchmarks */}
+          <IndustryBenchmarks
+            benchmarks={industryConfig.benchmarks}
+            industryName={industryConfig.name}
+          />
+
+          {/* Competitive Audit Tool */}
+          <CompetitiveAudit industryName={industryConfig.name} />
+
+          {/* Industry-specific CTA */}
+          <IndustryCTA
+            config={industryConfig.cta}
+            painPoints={industryConfig.painPoints}
+            industryName={industryConfig.name}
+          />
+        </div>
+      )}
 
       {/* Case studies grid */}
       {caseStudies.length > 0 && (
@@ -491,8 +553,8 @@ function CaseStudyLayout({ page }: { page: Page }) {
   return (
     <div className="mx-auto max-w-3xl">
       <div
-        className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary"
-        dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
+        className="prose-blog max-w-none"
+        dangerouslySetInnerHTML={{ __html: renderContent(page.content, page.full_path) }}
       />
     </div>
   )
@@ -503,8 +565,8 @@ function LocationLayout({ page, relatedPosts }: { page: Page; relatedPosts: Post
     <>
       <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
         <div
-          className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary"
-          dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
+          className="prose-blog max-w-none"
+          dangerouslySetInnerHTML={{ __html: renderContent(page.content, page.full_path) }}
         />
         <RelatedPostsSidebar posts={relatedPosts} />
       </div>
@@ -516,8 +578,8 @@ function ResearchLayout({ page }: { page: Page }) {
   return (
     <div className="mx-auto max-w-3xl">
       <div
-        className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary prose-p:text-base prose-p:leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
+        className="prose-blog max-w-none"
+        dangerouslySetInnerHTML={{ __html: renderContent(page.content, page.full_path) }}
       />
     </div>
   )
@@ -527,8 +589,8 @@ function FormLayout({ page }: { page: Page }) {
   return (
     <div className="mx-auto max-w-3xl">
       <div
-        className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary"
-        dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
+        className="prose-blog max-w-none"
+        dangerouslySetInnerHTML={{ __html: renderContent(page.content, page.full_path) }}
       />
     </div>
   )
@@ -538,8 +600,8 @@ function UtilityLayout({ page }: { page: Page }) {
   return (
     <div className="mx-auto max-w-3xl">
       <div
-        className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary prose-p:text-sm prose-p:leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
+        className="prose-blog max-w-none text-sm"
+        dangerouslySetInnerHTML={{ __html: renderContent(page.content, page.full_path) }}
       />
     </div>
   )
@@ -549,8 +611,8 @@ function GeneralLayout({ page, relatedPosts }: { page: Page; relatedPosts: Post[
   return (
     <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
       <div
-        className="prose prose-invert max-w-none prose-headings:font-bold prose-a:text-primary"
-        dangerouslySetInnerHTML={{ __html: renderContent(page.content) }}
+        className="prose-blog max-w-none"
+        dangerouslySetInnerHTML={{ __html: renderContent(page.content, page.full_path) }}
       />
       <RelatedPostsSidebar posts={relatedPosts} />
     </div>
