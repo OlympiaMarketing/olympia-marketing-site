@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { ScrollReveal } from "@/components/animations/scroll-reveal"
 import { ArrowRight, Calendar } from "lucide-react"
@@ -61,14 +60,13 @@ export function BlogPreview() {
             <ScrollReveal key={i} delay={i * 0.1}>
               <Link href="/blog" className="group block h-full">
                 <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5">
-                  {/* Image */}
+                  {/* Gradient placeholder */}
                   <div className="relative h-48 overflow-hidden">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    <div
+                      className="absolute inset-0 transition-transform duration-500 group-hover:scale-105"
+                      style={{
+                        background: "linear-gradient(135deg, #1A1040 0%, #2D1B69 50%, #0D0B1F 100%)",
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-card/60 to-transparent" />
                     <span className="absolute top-3 left-3 inline-flex rounded-md bg-primary/90 px-2.5 py-1 text-xs font-medium text-primary-foreground">

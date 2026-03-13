@@ -4,40 +4,43 @@ import { motion } from "framer-motion"
 
 export function BlogHero() {
   return (
-    <section className="relative overflow-hidden py-24 md:py-32">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="aurora-blob absolute -left-1/4 top-0 h-[500px] w-[500px] rounded-full bg-primary/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,transparent_0%,var(--background)_70%)]" />
-      </div>
+    <section className="relative overflow-hidden bg-[#0f0b1a] py-24 md:py-32">
+      {/* Subtle radial glow */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 0%, rgba(109,40,217,0.2) 0%, transparent 70%)",
+        }}
+      />
 
-      <div className="relative mx-auto max-w-7xl px-4 md:px-8">
-        <motion.div
+      <div className="relative mx-auto max-w-4xl px-4 text-center md:px-8">
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="text-[11px] font-semibold uppercase tracking-[3px] text-primary"
         >
-          <p className="text-sm font-medium uppercase tracking-widest text-primary">
-            Blog & Insights
-          </p>
-        </motion.div>
+          Blog
+        </motion.p>
 
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="mt-4 max-w-4xl text-4xl font-bold leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl"
+          className="font-heading mt-5 text-4xl font-semibold leading-[1.1] tracking-tight text-white md:text-5xl lg:text-6xl"
         >
-          Marketing &{" "}
-          <span className="gradient-text">Advertising</span> Updates
+          Marketing Insights &amp; Education
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-8 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg"
+          className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/60 md:text-lg"
         >
-          Our marketing & advertising blog offers insight into our perspective in marketing &ndash; tips for your business, as well as actionable information for marketers at every level to up their game. With over 20 years in digital and conventional marketing we&rsquo;re one of the most seasoned teams when it comes to providing results in the 21st Century.
+          Expert perspectives on marketing, advertising, and business growth
+          from the Olympia Marketing team.
         </motion.p>
       </div>
     </section>

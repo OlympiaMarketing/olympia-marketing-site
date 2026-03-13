@@ -1,9 +1,10 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { ScrollReveal } from "@/components/animations/scroll-reveal"
 import { ArrowRight } from "lucide-react"
+
+const teamInitials = ["ZK", "CL", "JG", "TM"]
 
 const links = [
   { label: "Our Capabilities", href: "/about#capabilities" },
@@ -21,18 +22,14 @@ export function AboutPreview() {
           <ScrollReveal>
             <div className="relative">
               <div className="grid grid-cols-2 gap-3">
-                {[1, 2, 3, 4].map((n) => (
+                {teamInitials.map((initials, i) => (
                   <div
-                    key={n}
-                    className="relative aspect-square overflow-hidden rounded-2xl border border-border bg-card"
+                    key={i}
+                    className="flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-primary/20 to-primary/5"
                   >
-                    <Image
-                      src={`/images/team-${n}.png`}
-                      alt={`Olympia Marketing team member ${n}`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 45vw, 25vw"
-                    />
+                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-primary/30 to-primary/10 text-2xl font-bold text-primary">
+                      {initials}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -50,10 +47,10 @@ export function AboutPreview() {
           {/* Text side */}
           <div>
             <ScrollReveal delay={0.1}>
-              <p className="text-sm font-medium uppercase tracking-widest text-primary">
+              <p className="text-[11px] font-semibold uppercase tracking-[3px] text-primary">
                 Who We Are
               </p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground md:text-5xl">
+              <h2 className="mt-3 font-heading text-[42px] font-semibold text-foreground">
                 About Olympia Marketing
               </h2>
             </ScrollReveal>

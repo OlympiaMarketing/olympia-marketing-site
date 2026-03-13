@@ -46,7 +46,7 @@ export function IndustryCalculator({ config, industryName }: IndustryCalculatorP
             <Calculator className="h-7 w-7 text-primary" />
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-foreground">
+            <h3 className="font-heading text-2xl font-bold text-foreground">
               {config.label}
             </h3>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -74,7 +74,7 @@ export function IndustryCalculator({ config, industryName }: IndustryCalculatorP
             step={config.step}
             value={units}
             onChange={(e) => setUnits(Number(e.target.value))}
-            className="mt-4 h-2 w-full cursor-pointer appearance-none rounded-full bg-border accent-[oklch(0.72_0.17_195)]"
+            className="mt-4 h-2 w-full cursor-pointer appearance-none rounded-full bg-border accent-[#8B5CF6]"
           />
           <div className="mt-2 flex justify-between text-xs text-muted-foreground">
             <span>{config.min}</span>

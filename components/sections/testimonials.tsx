@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { ScrollReveal } from "@/components/animations/scroll-reveal"
 import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react"
@@ -22,7 +21,7 @@ const testimonials = [
     name: "Laura Lorusso",
     title: "Owner - Skincare Academy",
     stars: 5,
-    image: "/images/case-skincare-academy.png",
+    image: null,
     initials: "LL",
   },
   {
@@ -31,7 +30,7 @@ const testimonials = [
     name: "Joe G.",
     title: "CEO - AI SAAS Company",
     stars: 5,
-    image: "/images/stealthgpt-img.png",
+    image: null,
     initials: "JG",
   },
   {
@@ -40,7 +39,7 @@ const testimonials = [
     name: "Scott Kern",
     title: "Owner - Quality Service Company",
     stars: 5,
-    image: "/images/testimonial-quality-service.png",
+    image: null,
     initials: "SK",
   },
   {
@@ -49,7 +48,7 @@ const testimonials = [
     name: "Will Schwarz",
     title: "Co-Owner RetailMTS",
     stars: 5,
-    image: "/images/case-retailmts.png",
+    image: null,
     initials: "WS",
   },
 ]
@@ -74,11 +73,11 @@ export function Testimonials() {
 
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <ScrollReveal>
-          <p className="text-sm font-medium uppercase tracking-widest text-primary">
-            Testimonials
+          <p className="text-[11px] font-semibold uppercase tracking-[3px] text-primary">
+            Client Stories
           </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground md:text-5xl">
-            What Our Customers Say About Us
+          <h2 className="mt-3 font-heading text-[42px] font-semibold text-foreground">
+            Results That Speak
           </h2>
         </ScrollReveal>
 
@@ -110,21 +109,9 @@ export function Testimonials() {
                   &ldquo;{testimonials[current].quote}&rdquo;
                 </blockquote>
                 <div className="mt-10 flex items-center gap-4">
-                  {testimonials[current].image ? (
-                    <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full ring-2 ring-primary/20">
-                      <Image
-                        src={testimonials[current].image!}
-                        alt={testimonials[current].name}
-                        fill
-                        className="object-contain"
-                        sizes="56px"
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/30 to-accent/20 text-lg font-bold text-foreground ring-2 ring-primary/20">
-                      {testimonials[current].initials}
-                    </div>
-                  )}
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/30 to-accent/20 text-lg font-bold text-foreground ring-2 ring-primary/20">
+                    {testimonials[current].initials}
+                  </div>
                   <div>
                     <p className="text-base font-semibold text-foreground">
                       {testimonials[current].name}

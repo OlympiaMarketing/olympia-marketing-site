@@ -1,7 +1,6 @@
 "use client"
 
 import { useRef } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { ScrollReveal } from "@/components/animations/scroll-reveal"
@@ -13,7 +12,7 @@ const caseStudies = [
     description:
       "The Physician Aesthetic Institute \u2014 Your Southwest Florida Medical Spa serving Naples, Bonita Springs, Fort Myers, Estero. Providing a number of Esthetician & Med Spa services to both Lee & Collier County.",
     category: "Healthcare",
-    image: "/images/case-pai.png",
+    image: null,
     stat: "6x",
     statLabel: "Enrollment Boost",
   },
@@ -22,7 +21,7 @@ const caseStudies = [
     description:
       "Spa Professionals Academy is a Lee County Based Esthetician School Designed to Assist Anyone Pursue a Career as an Esthetician or General Spa Services. We serve students from all over including Collier County.",
     category: "Education",
-    image: "/images/case-skincare-academy.png",
+    image: null,
     stat: "$1M+",
     statLabel: "Monthly Lead Value",
   },
@@ -31,7 +30,7 @@ const caseStudies = [
     description:
       "Explore the ultimate guide to Esthetician Schools! Discover top programs, career insights, and expert advice at Esthetician Schools Directory.",
     category: "Education",
-    image: "/images/case-esthetician.jpg",
+    image: null,
     stat: "150+",
     statLabel: "Students Enrolled",
   },
@@ -92,14 +91,13 @@ export function CaseStudiesPreview() {
               transition={{ duration: 0.6, delay: i * 0.12 }}
               className="relative overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/10"
             >
-              {/* Card header with real image */}
+              {/* Card header with gradient placeholder */}
               <div className="relative h-56 overflow-hidden md:h-64">
-                <Image
-                  src={study.image}
-                  alt={study.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="(max-width: 768px) 340px, 440px"
+                <div
+                  className="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
+                  style={{
+                    background: "linear-gradient(135deg, #1A1040 0%, #2D1B69 50%, #0D0B1F 100%)",
+                  }}
                 />
                 {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />

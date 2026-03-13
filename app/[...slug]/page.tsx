@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { Facebook, Linkedin, Twitter } from "lucide-react"
+import { ArrowRight, Facebook, Linkedin, Twitter } from "lucide-react"
 import {
   getPageByPath,
   getAllPages,
@@ -20,6 +20,8 @@ import { IndustryCTA } from "@/components/industry/industry-cta"
 import { CompetitiveAudit } from "@/components/industry/competitive-audit"
 import { IndustryBenchmarks } from "@/components/industry/industry-benchmarks"
 import { getIndustryConfig } from "@/components/industry/industry-config"
+import { IndustryTemplate } from "@/components/industry/industry-template"
+import { getIndustryTemplateData } from "@/components/industry/industry-template-data"
 
 // ---------------------------------------------------------------------------
 // Static generation
@@ -153,8 +155,11 @@ async function BlogPostView({ post }: { post: Post }) {
       ])} />
 
       {/* ---- Hero ---- */}
-      <section className="relative overflow-hidden border-b border-border bg-card py-24 md:py-32">
-        <div className="aurora-blob pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-primary/10" />
+      <section className="relative overflow-hidden py-24 md:py-32" style={{ background: '#0D0B1F' }}>
+        <div
+          className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full opacity-60"
+          style={{ background: 'radial-gradient(ellipse, #7C3AED20 0%, transparent 100%)' }}
+        />
 
         <div className="relative mx-auto max-w-3xl px-6">
           <Breadcrumbs items={[
@@ -177,7 +182,7 @@ async function BlogPostView({ post }: { post: Post }) {
             </div>
           )}
 
-          <h1 className="text-3xl font-bold leading-tight md:text-4xl lg:text-5xl">
+          <h1 className="font-heading text-3xl font-bold leading-tight text-foreground md:text-4xl lg:text-5xl">
             {post.title}
           </h1>
 
@@ -364,43 +369,38 @@ async function PageView({ page }: { page: Page }) {
       <PageHero page={page} breadcrumbs={breadcrumbItems} />
 
       {/* ---- Main Content Area ---- */}
-      <div className="mx-auto max-w-5xl px-6 py-16">
-        {/* Service pages */}
-        {page.page_type === "service" && (
-          <ServiceLayout page={page} relatedPosts={relatedPosts} />
-        )}
+      {page.page_type === "industry" ? (
+        <IndustryPageContent page={page} relatedPosts={relatedPosts} caseStudies={caseStudies} />
+      ) : (
+        <div className="mx-auto max-w-5xl px-6 py-16">
+          {/* Service pages */}
+          {page.page_type === "service" && (
+            <ServiceLayout page={page} relatedPosts={relatedPosts} />
+          )}
 
-        {/* Industry pages */}
-        {page.page_type === "industry" && (
-          <IndustryLayout
-            page={page}
-            relatedPosts={relatedPosts}
-            caseStudies={caseStudies}
-          />
-        )}
+          {/* Case study pages */}
+          {page.page_type === "case-study" && <CaseStudyLayout page={page} />}
 
-        {/* Case study pages */}
-        {page.page_type === "case-study" && <CaseStudyLayout page={page} />}
+          {/* Location pages */}
+          {page.page_type === "location" && (
+            <LocationLayout page={page} relatedPosts={relatedPosts} />
+          )}
 
-        {/* Location pages */}
-        {page.page_type === "location" && (
-          <LocationLayout page={page} relatedPosts={relatedPosts} />
-        )}
+          {/* Research pages */}
+          {page.page_type === "research" && <ResearchLayout page={page} />}
 
-        {/* Research pages */}
-        {page.page_type === "research" && <ResearchLayout page={page} />}
+          {/* Form pages */}
+          {page.page_type === "form" && <FormLayout page={page} />}
 
-        {/* Form pages */}
-        {page.page_type === "form" && <FormLayout page={page} />}
+          {/* Utility pages (privacy, terms, etc.) */}
+          {page.page_type === "utility" && <UtilityLayout page={page} />}
 
-        {/* Utility pages (privacy, terms, etc.) */}
-        {page.page_type === "utility" && <UtilityLayout page={page} />}
-
-        {/* General / fallback */}
-        {page.page_type === "general" && (
-          <GeneralLayout page={page} relatedPosts={relatedPosts} />
-        )}
-      </div>
+          {/* General / fallback */}
+          {page.page_type === "general" && (
+            <GeneralLayout page={page} relatedPosts={relatedPosts} />
+          )}
+        </div>
+      )}
     </article>
   )
 }
@@ -411,18 +411,30 @@ async function PageView({ page }: { page: Page }) {
 
 function PageHero({ page, breadcrumbs }: { page: Page; breadcrumbs?: { label: string; href?: string }[] }) {
   return (
-    <section className="relative overflow-hidden border-b border-border bg-card py-24 md:py-32">
+    <section className="relative overflow-hidden py-24 md:py-32" style={{ background: '#0D0B1F' }}>
       {/* Decorative gradient blob */}
-      <div className="aurora-blob pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-primary/10" />
+      <div
+        className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full opacity-60"
+        style={{ background: 'radial-gradient(ellipse, #7C3AED20 0%, transparent 100%)' }}
+      />
+      <div
+        className="pointer-events-none absolute -left-20 bottom-0 h-[300px] w-[400px] rounded-full opacity-40"
+        style={{ background: 'radial-gradient(ellipse, #6D28D915 0%, transparent 100%)' }}
+      />
+      {/* Bottom accent line */}
+      <div
+        className="absolute bottom-0 left-0 h-px w-full"
+        style={{ background: 'linear-gradient(90deg, transparent, #8B5CF640, transparent)' }}
+      />
 
       <div className="relative mx-auto max-w-5xl px-6">
         {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
         {page.page_type !== "general" && (
-          <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-widest text-primary">
+          <p className="mb-4 text-[11px] font-semibold uppercase tracking-[3px] text-primary">
             {page.page_type.replace("-", " ")}
-          </span>
+          </p>
         )}
-        <h1 className="text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
+        <h1 className="font-heading text-4xl font-bold leading-tight text-foreground md:text-5xl lg:text-6xl">
           {page.title}
         </h1>
         {page.seo_description && (
@@ -464,86 +476,144 @@ function RelatedPostsSidebar({ posts }: { posts: Post[] }) {
 // ===========================================================================
 
 function ServiceLayout({ page, relatedPosts }: { page: Page; relatedPosts: Post[] }) {
-  return (
-    <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
-      <div
-        className="prose-blog max-w-none"
-        dangerouslySetInnerHTML={{ __html: renderContent(page.content, page.full_path) }}
-      />
-      <RelatedPostsSidebar posts={relatedPosts} />
-    </div>
-  )
-}
-
-function IndustryLayout({
-  page,
-  relatedPosts,
-  caseStudies,
-}: {
-  page: Page
-  relatedPosts: Post[]
-  caseStudies: Page[]
-}) {
-  const industryConfig = getIndustryConfig(page.full_path)
+  const serviceName = page.title
 
   return (
     <>
       <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
-        <div
-          className="prose-blog max-w-none"
-          dangerouslySetInnerHTML={{ __html: renderContent(page.content, page.full_path) }}
-        />
-        <RelatedPostsSidebar posts={relatedPosts} />
+        {/* Main content */}
+        <div>
+          <div
+            className="prose-blog max-w-none"
+            dangerouslySetInnerHTML={{ __html: renderContent(page.content, page.full_path) }}
+          />
+
+          {/* Why Choose section */}
+          <section className="mt-16 rounded-2xl border border-border bg-card p-8 lg:p-10">
+            <h2 className="font-heading text-2xl font-bold text-foreground">
+              Why Choose Olympia for {serviceName}
+            </h2>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              {[
+                { title: "Data-Driven Strategy", desc: "Every decision backed by analytics and real performance data." },
+                { title: "Dedicated Team", desc: "A senior strategist assigned to your account — not a rotating door of juniors." },
+                { title: "Transparent Reporting", desc: "Monthly reports you can actually understand, with clear ROI metrics." },
+                { title: "Local + National Reach", desc: "We help small businesses compete with big brands — and win." },
+              ].map((item) => (
+                <div key={item.title} className="rounded-xl border border-border/50 bg-background p-5">
+                  <h3 className="font-semibold text-foreground">{item.title}</h3>
+                  <p className="mt-1.5 text-sm text-muted-foreground">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        {/* Sidebar */}
+        <aside className="space-y-8">
+          {/* CTA Card */}
+          <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6">
+            <h3 className="font-heading text-lg font-semibold text-foreground">
+              Get a Free {serviceName} Audit
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Discover opportunities to grow your business with a custom strategy.
+            </p>
+            <Link
+              href="/contact"
+              className="mt-4 inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
+            >
+              Request Yours Free <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          {/* Related Posts */}
+          <RelatedPostsSidebar posts={relatedPosts} />
+        </aside>
       </div>
 
-      {/* Industry conversion components */}
+      {/* Bottom CTA */}
+      <div
+        className="mt-16 rounded-2xl p-10 text-center"
+        style={{ background: 'linear-gradient(135deg, #6D28D9 0%, #1E1B3A 100%)' }}
+      >
+        <h2 className="font-heading text-3xl font-bold text-white">
+          Ready to Transform Your {serviceName}?
+        </h2>
+        <p className="mt-3 text-base text-white/70">
+          Schedule your free strategy call and get a custom roadmap.
+        </p>
+        <div className="mt-6 flex items-center justify-center gap-4">
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-[#6D28D9] transition-all hover:bg-white/90"
+          >
+            Get Started <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link
+            href="tel:2393084011"
+            className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-white/10"
+          >
+            (239) 308-4011
+          </Link>
+        </div>
+      </div>
+    </>
+  )
+}
+
+function IndustryPageContent({ page, relatedPosts, caseStudies }: { page: Page; relatedPosts: Post[]; caseStudies: Page[] }) {
+  const industryConfig = getIndustryConfig(page.full_path)
+  const templateData = getIndustryTemplateData(page.full_path)
+
+  return (
+    <>
+      {/* WordPress content in contained width */}
+      <div className="mx-auto max-w-5xl px-6 py-16">
+        <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
+          <div
+            className="prose-blog max-w-none"
+            dangerouslySetInnerHTML={{ __html: renderContent(page.content, page.full_path) }}
+          />
+          <RelatedPostsSidebar posts={relatedPosts} />
+        </div>
+      </div>
+
+      {/* Full-width industry template sections */}
+      {templateData && <IndustryTemplate {...templateData} />}
+
+      {/* Conversion components in contained width */}
       {industryConfig && (
-        <div className="mt-20 space-y-16">
-          {/* ROI Calculator */}
-          <IndustryCalculator
-            config={industryConfig.calculator}
-            industryName={industryConfig.name}
-          />
-
-          {/* Industry Benchmarks */}
-          <IndustryBenchmarks
-            benchmarks={industryConfig.benchmarks}
-            industryName={industryConfig.name}
-          />
-
-          {/* Competitive Audit Tool */}
-          <CompetitiveAudit industryName={industryConfig.name} />
-
-          {/* Industry-specific CTA */}
-          <IndustryCTA
-            config={industryConfig.cta}
-            painPoints={industryConfig.painPoints}
-            industryName={industryConfig.name}
-          />
+        <div className="mx-auto max-w-5xl px-6 py-16">
+          <div className="space-y-16">
+            <IndustryCalculator config={industryConfig.calculator} industryName={industryConfig.name} />
+            <IndustryBenchmarks benchmarks={industryConfig.benchmarks} industryName={industryConfig.name} />
+            <CompetitiveAudit industryName={industryConfig.name} />
+            <IndustryCTA config={industryConfig.cta} painPoints={industryConfig.painPoints} industryName={industryConfig.name} />
+          </div>
         </div>
       )}
 
-      {/* Case studies grid */}
+      {/* Case studies in contained width */}
       {caseStudies.length > 0 && (
-        <section className="mt-20">
-          <h2 className="mb-8 text-2xl font-bold">Case Studies</h2>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {caseStudies.slice(0, 6).map((cs) => (
-              <Link
-                key={cs.slug}
-                href={`/${cs.full_path}`}
-                className="group rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary/40"
-              >
-                <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-                  Case Study
-                </span>
-                <h3 className="mt-2 font-semibold leading-snug group-hover:text-primary">
-                  {cs.title}
-                </h3>
-              </Link>
-            ))}
-          </div>
-        </section>
+        <div className="mx-auto max-w-5xl px-6 pb-16">
+          <section>
+            <p className="text-[11px] font-semibold uppercase tracking-[3px] text-primary">Results</p>
+            <h2 className="mt-3 mb-8 font-heading text-[32px] font-semibold text-foreground">Case Studies</h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {caseStudies.slice(0, 6).map((cs) => (
+                <Link
+                  key={cs.slug}
+                  href={`/${cs.full_path}`}
+                  className="group rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
+                >
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-primary">Case Study</span>
+                  <h3 className="mt-2 font-semibold leading-snug text-foreground group-hover:text-primary">{cs.title}</h3>
+                </Link>
+              ))}
+            </div>
+          </section>
+        </div>
       )}
     </>
   )

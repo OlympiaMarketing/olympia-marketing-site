@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import { resolveJsonPath } from './resolve-path';
 
 // ---------------------------------------------------------------------------
@@ -19,6 +20,35 @@ export interface Post {
 }
 
 // ---------------------------------------------------------------------------
+// Local image resolution — maps wp-content URLs to downloaded local files
+// ---------------------------------------------------------------------------
+
+/** Build a set of filenames in /public/images/posts/ for fast lookup */
+function buildLocalImageIndex(): Set<string> {
+  const dir = path.join(process.cwd(), 'public', 'images', 'posts');
+  try {
+    return new Set(fs.readdirSync(dir));
+  } catch {
+    return new Set();
+  }
+}
+
+/**
+ * For each image URL, try to find a local file at /images/posts/{slug}-{index}.{ext}.
+ * Returns an array with local paths for images that exist, omitting any that don't.
+ */
+function resolvePostImages(slug: string, images: string[], localIndex: Set<string>): string[] {
+  return images.reduce<string[]>((resolved, _url, i) => {
+    const prefix = `${slug}-${i}.`;
+    const localFile = [...localIndex].find((f) => f.startsWith(prefix));
+    if (localFile) {
+      resolved.push(`/images/posts/${localFile}`);
+    }
+    return resolved;
+  }, []);
+}
+
+// ---------------------------------------------------------------------------
 // Data loading (reads JSON once, caches in module scope)
 // ---------------------------------------------------------------------------
 
@@ -29,11 +59,17 @@ function loadPosts(): Post[] {
 
   const filePath = resolveJsonPath('posts.json');
   const raw: Post[] = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+  const localIndex = buildLocalImageIndex();
 
   // Sort by date descending (newest first) as default ordering
-  _cache = raw.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
+  _cache = raw
+    .map((post) => ({
+      ...post,
+      images: resolvePostImages(post.slug, post.images, localIndex),
+    }))
+    .sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    );
 
   return _cache;
 }

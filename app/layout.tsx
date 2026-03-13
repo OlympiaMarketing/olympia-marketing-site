@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Inter, Cormorant_Garamond } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
@@ -9,29 +9,21 @@ import { JsonLd } from "@/components/seo/json-ld"
 import { getOrganizationSchema, getWebSiteSchema } from "@/lib/schema"
 import "./globals.css"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-cormorant",
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://olympiamarketing.com"),
   title: {
-    default: "Olympia Marketing: SWFL Marketing & Advertising Experts",
+    default: "Olympia Marketing | Godlike Marketing for Small Business",
     template: "%s | Olympia Marketing",
   },
   description:
-    "Olympia Marketing is a full-service creative agency with a digital-first mindset. We help businesses scale quickly with targeted, measurable marketing in Southwest Florida.",
-  keywords: [
-    "digital marketing",
-    "fort myers marketing agency",
-    "SWFL marketing",
-    "web design",
-    "SEO",
-    "PPC",
-    "advertising agency",
-    "olympia marketing",
-    "estero marketing agency",
-    "southwest florida marketing",
-  ],
+    "Full-service marketing agency in Estero, FL. SEO, PPC, web design, branding, and more. Godlike marketing for small business in Southwest Florida.",
   authors: [{ name: "Zachary Katkin" }],
   openGraph: {
     type: "website",
@@ -48,7 +40,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#1e2433",
+  themeColor: "#09071A",
   width: "device-width",
   initialScale: 1,
 }
@@ -59,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className={`dark ${inter.variable} ${cormorant.variable}`}>
       <head>
         <JsonLd data={getOrganizationSchema()} />
         <JsonLd data={getWebSiteSchema()} />

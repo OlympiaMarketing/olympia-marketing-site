@@ -1,82 +1,116 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { ScrollReveal } from "@/components/animations/scroll-reveal"
-import { Crosshair, Compass, Rocket, BarChart3 } from "lucide-react"
+import { motion } from "framer-motion"
 
-const steps = [
+interface TimelineEvent {
+  year: string
+  title: string
+  description: string
+}
+
+const timeline: TimelineEvent[] = [
   {
-    icon: Crosshair,
-    number: "01",
-    title: "Discover",
+    year: "2005",
+    title: "The Beginning",
     description:
-      "We take the time to understand your business, industry, competitors, and goals. Through in-depth discovery sessions, we develop a comprehensive understanding of what success looks like for you and identify the most impactful opportunities for growth.",
+      "Founded with a simple belief: small businesses deserve the same caliber of marketing that Fortune 500 companies enjoy. Started with one client and a laptop.",
   },
   {
-    icon: Compass,
-    number: "02",
-    title: "Align",
+    year: "2010",
+    title: "Going Digital-First",
     description:
-      "We align on strategy, ensuring that every recommendation and action item is tailored to your unique business objectives. Our team works collaboratively with yours to create a roadmap that balances quick wins with long-term growth strategies.",
+      "Shifted fully to digital marketing before most agencies saw the wave coming. Invested early in SEO, PPC, and data-driven strategy while competitors clung to print.",
   },
   {
-    icon: Rocket,
-    number: "03",
-    title: "Execute",
+    year: "2016",
+    title: "Full-Service Expansion",
     description:
-      "This is where the magic happens. Our team of designers, developers, marketers, and strategists bring the plan to life. From brand-new websites to multi-channel marketing campaigns, we move fast and deliver quality at every step.",
+      "Grew from a boutique digital shop into a full-service agency offering web design, branding, and multi-channel campaigns — all under one roof.",
   },
   {
-    icon: BarChart3,
-    number: "04",
-    title: "Monitor & Adjust",
+    year: "2020",
+    title: "The Growth Guarantee",
     description:
-      "Marketing is never set-it-and-forget-it. We continuously monitor performance, analyze data, and make strategic adjustments to optimize results. Regular reporting keeps you informed, and our proactive approach ensures we stay ahead of market shifts.",
+      "Introduced our 100% Growth Guarantee, putting our money where our mouth is. If we do not deliver measurable results, clients do not pay.",
+  },
+  {
+    year: "2024",
+    title: "Olympia Today",
+    description:
+      "Serving clients across dozens of industries with a senior team, battle-tested strategies, and a track record of delivering 10x growth in the first year.",
   },
 ]
 
 export function ProcessSteps() {
   return (
-    <section id="process" className="relative border-t border-border py-24 md:py-32">
-      {/* Connecting line */}
-      <div className="pointer-events-none absolute left-1/2 top-24 hidden h-[calc(100%-12rem)] w-px -translate-x-1/2 bg-gradient-to-b from-primary/30 via-border to-transparent lg:block" />
-
-      <div className="mx-auto max-w-7xl px-4 md:px-8">
+    <section className="py-20 px-6">
+      <div className="mx-auto max-w-7xl">
         <ScrollReveal>
-          <p className="text-sm font-medium uppercase tracking-widest text-primary">
-            Our Process
+          <p className="text-[11px] font-semibold uppercase tracking-[3px] text-primary">
+            Our Story
           </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground md:text-5xl">
-            Goals
+          <h2 className="font-heading mt-4 text-[42px] font-semibold text-foreground">
+            A Legendary Journey
           </h2>
           <p className="mt-6 max-w-3xl text-base leading-relaxed text-muted-foreground">
-            At Olympia Marketing, our goals include understanding your problems, aligning on the best possible solutions, executing at a high level and continuously measuring our success and optimizing our strategies.
+            From a one-person operation to a full-service agency trusted by
+            businesses across the country, every milestone shaped who we are
+            today.
           </p>
         </ScrollReveal>
 
-        <div className="relative mt-20 grid gap-12 lg:grid-cols-2 lg:gap-x-20 lg:gap-y-16">
-          {steps.map((step, i) => (
-            <ScrollReveal key={i} delay={i * 0.15} direction={i % 2 === 0 ? "left" : "right"}>
-              <motion.div
-                whileHover={{ y: -4 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="glass group relative rounded-2xl p-8 transition-all hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5"
-              >
-                {/* Step number */}
-                <span className="absolute -top-3 right-6 rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground">
-                  {step.number}
-                </span>
+        <div className="relative mt-20">
+          {/* Vertical timeline line */}
+          <div className="absolute left-4 top-0 hidden h-full w-px bg-gradient-to-b from-primary/40 via-border to-transparent md:left-1/2 md:block md:-translate-x-px" />
 
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 transition-all group-hover:bg-primary/20 group-hover:scale-110">
-                  <step.icon className="h-7 w-7 text-primary" />
-                </div>
-                <h3 className="mt-5 text-xl font-bold text-foreground">{step.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {step.description}
-                </p>
-              </motion.div>
-            </ScrollReveal>
-          ))}
+          <div className="space-y-12 md:space-y-16">
+            {timeline.map((event, i) => {
+              const isLeft = i % 2 === 0
+              return (
+                <ScrollReveal
+                  key={event.year}
+                  delay={i * 0.12}
+                  direction={isLeft ? "left" : "right"}
+                >
+                  <div className="relative md:flex md:items-start md:justify-between">
+                    {/* Dot on line */}
+                    <div className="absolute left-4 top-2 z-10 hidden h-3 w-3 -translate-x-1/2 rounded-full border-2 border-primary bg-background md:left-1/2 md:block" />
+
+                    {/* Left column */}
+                    <div
+                      className={`md:w-[45%] ${isLeft ? "md:text-right md:pr-12" : "md:order-2 md:pl-12"}`}
+                    >
+                      <motion.div
+                        whileHover={{ y: -4 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 20,
+                        }}
+                        className="rounded-2xl border border-border bg-card p-8 transition-all hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5"
+                      >
+                        <span className="text-[11px] font-semibold uppercase tracking-[3px] text-primary">
+                          {event.year}
+                        </span>
+                        <h3 className="mt-2 text-xl font-bold text-foreground">
+                          {event.title}
+                        </h3>
+                        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                          {event.description}
+                        </p>
+                      </motion.div>
+                    </div>
+
+                    {/* Right column (empty spacer) */}
+                    <div
+                      className={`hidden md:block md:w-[45%] ${isLeft ? "md:order-2" : ""}`}
+                    />
+                  </div>
+                </ScrollReveal>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>

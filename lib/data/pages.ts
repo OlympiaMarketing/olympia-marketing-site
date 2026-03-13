@@ -160,6 +160,8 @@ function loadPages(): Page[] {
   _cache = raw.map((p) => ({
     ...p,
     full_path: p.full_path || p.slug,
+    // Strip wp-content image URLs — no local equivalents exist for pages
+    images: p.images.filter((url) => !url.includes('wp-content')),
     page_type: classifyPage(p.slug),
     related_categories: CATEGORY_MAP[p.slug] ?? [],
   }));

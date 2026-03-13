@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Link from "next/link"
 import { Phone, Mail, MapPin, Facebook, Youtube, Twitter } from "lucide-react"
 
@@ -28,7 +27,6 @@ const companyLinks = [
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
   { href: "/schedule", label: "Schedule a Call" },
-  { href: "/privacy-policy", label: "Privacy Policy" },
 ]
 
 const socialLinks = [
@@ -51,34 +49,42 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-card">
+    <footer className="bg-[var(--bg-surface)]">
+      {/* Purple gradient divider */}
+      <div
+        className="h-px w-full"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, #8B5CF6 50%, transparent 100%)",
+        }}
+      />
+
       <div className="mx-auto max-w-7xl px-4 py-16 md:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
-          {/* Brand */}
-          <div className="lg:col-span-2">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+          {/* Column 1: Brand */}
+          <div>
             <Link href="/" className="inline-block">
-              <Image
-                src="/images/logo-olympiamarketing.png"
-                alt="Olympia Marketing"
-                width={180}
-                height={72}
-                className="h-9 w-auto brightness-0 invert"
-              />
+              <span className="font-heading text-2xl font-bold tracking-wide text-foreground">
+                OLYMPIA
+              </span>
             </Link>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Full-Service Creative Agency with a digital-first mindset. We help businesses scale quickly with targeted, measurable marketing.
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
+              Godlike Marketing for Small Business. Full-service creative agency
+              with a digital-first mindset.
             </p>
+
+            {/* Contact info */}
             <div className="mt-6 flex flex-col gap-3">
               <Link
                 href="tel:2393084011"
-                className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
               >
                 <Phone className="h-4 w-4 text-primary" />
                 (239) 308-4011
               </Link>
               <Link
                 href="mailto:contact@olympiamarketing.com"
-                className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
               >
                 <Mail className="h-4 w-4 text-primary" />
                 contact@olympiamarketing.com
@@ -89,7 +95,7 @@ export function Footer() {
               </span>
             </div>
 
-            {/* Social links */}
+            {/* Social icons */}
             <div className="mt-6 flex gap-3">
               {socialLinks.map((social) => (
                 <a
@@ -106,7 +112,7 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Services */}
+          {/* Column 2: Services */}
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
               Services
@@ -116,7 +122,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
                   >
                     {link.label}
                   </Link>
@@ -125,7 +131,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Industries */}
+          {/* Column 3: Industries */}
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
               Industries
@@ -135,7 +141,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
                   >
                     {link.label}
                   </Link>
@@ -144,7 +150,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Column 4: Company */}
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
               Company
@@ -154,36 +160,38 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
-
-            <div className="mt-8">
-              <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-                Ready to Grow?
-              </h3>
-              <Link
-                href="/schedule"
-                className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
-              >
-                Free Consultation
-              </Link>
-            </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 flex flex-col items-center gap-4 border-t border-border pt-8 md:flex-row md:justify-between">
-          <p className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} Olympia Marketing. All rights reserved.
-          </p>
-          <p className="max-w-2xl text-center text-[10px] leading-relaxed text-muted-foreground/60 md:text-right">
-            marketing agency olympia, fort myers digital marketing, digital marketing agency fort myers, fort myers marketing agency, advertising agencies in fort myers, marketing agency fort myers, olympia marketing, swfl marketing agency, fort myers web design
-          </p>
+        <div
+          className="mt-12 pt-8"
+          style={{
+            borderTop:
+              "1px solid transparent",
+            borderImage:
+              "linear-gradient(90deg, transparent 0%, #8B5CF6 50%, transparent 100%) 1",
+          }}
+        >
+          <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between">
+            <p className="text-xs text-muted-foreground">
+              &copy; {new Date().getFullYear()} Olympia Marketing. All rights
+              reserved.
+            </p>
+            <Link
+              href="/privacy-policy"
+              className="text-xs text-muted-foreground transition-colors hover:text-primary"
+            >
+              Privacy Policy
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

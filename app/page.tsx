@@ -1,15 +1,15 @@
 import Link from "next/link"
 import { Hero } from "@/components/sections/hero"
 import { ClientMarquee } from "@/components/sections/client-marquee"
+import { ServicesGrid } from "@/components/sections/services-grid"
+import { BentoResults } from "@/components/sections/bento-results"
 import { StatsCounter } from "@/components/sections/stats-counter"
 import { Testimonials } from "@/components/sections/testimonials"
-import { ServicesGrid } from "@/components/sections/services-grid"
-import { CaseStudiesPreview } from "@/components/sections/case-studies-grid"
+import { DifferenceSection } from "@/components/sections/difference-section"
+import { NewsletterSignup } from "@/components/sections/newsletter-signup"
 import { FaqAccordion } from "@/components/sections/faq-accordion"
 import { CtaSection } from "@/components/sections/cta-section"
 import { SeoContent } from "@/components/sections/seo-content"
-import { AboutPreview } from "@/components/sections/about-preview"
-import { DifferenceSection } from "@/components/sections/difference-section"
 import { getRecentPosts, getPagesByType } from "@/lib/data"
 import type { Post, Page } from "@/lib/data"
 
@@ -21,36 +21,51 @@ export default async function HomePage() {
 
   return (
     <>
+      {/* 1. Hero */}
       <Hero />
-      <AboutPreview />
+
+      {/* 2. Trust Bar */}
       <ClientMarquee />
-      <DifferenceSection />
+
+      {/* 3. Services Overview */}
+      <ServicesGrid />
+
+      {/* 4. Results Bento Grid */}
+      <BentoResults />
+
+      {/* 5. Stats + Social Proof */}
       <StatsCounter />
       <Testimonials />
-      <ServicesGrid />
-      <CaseStudiesPreview />
 
-      {/* ---- Recent Blog Posts (data-driven) ---- */}
+      {/* 6. Why Choose Olympia */}
+      <DifferenceSection />
+
+      {/* 7. Newsletter */}
+      <NewsletterSignup />
+
+      {/* 8. Recent Blog Posts */}
       {recentPosts.length > 0 && (
-        <section className="border-t border-border py-20">
+        <section className="py-20">
           <div className="mx-auto max-w-6xl px-6">
-            <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-widest text-primary">
+            <p className="text-[11px] font-semibold uppercase tracking-[3px] text-primary">
               From the Blog
-            </span>
-            <h2 className="mb-10 text-3xl font-bold">Latest Insights</h2>
+            </p>
+            <h2 className="mt-3 mb-10 font-heading text-[38px] font-semibold text-foreground">
+              Latest Insights
+            </h2>
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {recentPosts.map((post: Post) => (
                 <Link
                   key={post.slug}
                   href={`/${post.slug}`}
-                  className="group rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary/40"
+                  className="group rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
                 >
                   {post.categories.length > 0 && (
                     <span className="text-[10px] font-semibold uppercase tracking-wider text-primary">
                       {post.categories[0]}
                     </span>
                   )}
-                  <h3 className="mt-2 font-semibold leading-snug group-hover:text-primary">
+                  <h3 className="mt-2 font-semibold leading-snug text-foreground group-hover:text-primary">
                     {post.title}
                   </h3>
                   {post.excerpt && (
@@ -83,25 +98,27 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ---- Case Studies (data-driven) ---- */}
+      {/* 9. Case Studies */}
       {caseStudies.length > 0 && (
-        <section className="border-t border-border py-20">
+        <section className="py-20">
           <div className="mx-auto max-w-6xl px-6">
-            <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-widest text-primary">
+            <p className="text-[11px] font-semibold uppercase tracking-[3px] text-primary">
               Results
-            </span>
-            <h2 className="mb-10 text-3xl font-bold">Case Studies</h2>
+            </p>
+            <h2 className="mt-3 mb-10 font-heading text-[38px] font-semibold text-foreground">
+              Case Studies
+            </h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {caseStudies.slice(0, 6).map((cs: Page) => (
                 <Link
                   key={cs.slug}
                   href={`/${cs.full_path}`}
-                  className="group rounded-lg border border-border bg-card p-6 transition-colors hover:border-primary/40"
+                  className="group rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
                 >
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-primary">
                     Case Study
                   </span>
-                  <h3 className="mt-2 font-semibold leading-snug group-hover:text-primary">
+                  <h3 className="mt-2 font-semibold leading-snug text-foreground group-hover:text-primary">
                     {cs.title}
                   </h3>
                 </Link>
@@ -111,7 +128,10 @@ export default async function HomePage() {
         </section>
       )}
 
+      {/* 10. FAQ */}
       <FaqAccordion />
+
+      {/* 11. CTA + Footer handled by layout */}
       <CtaSection />
       <SeoContent />
     </>

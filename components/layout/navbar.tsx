@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
@@ -268,7 +267,6 @@ export function Navbar() {
             General Support
           </Link>
           <span className="hidden text-muted-foreground/50 sm:inline">|</span>
-          <span className="hidden sm:inline">Need Help? Contact Olympia Marketing Support Team</span>
           <Link
             href="tel:2393084011"
             className="flex items-center gap-1.5 transition-colors hover:text-foreground font-medium"
@@ -287,14 +285,9 @@ export function Navbar() {
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-8">
           {/* Logo */}
           <Link href="/" className="group relative block shrink-0">
-            <Image
-              src="/images/logo-olympiamarketing.png"
-              alt="Olympia Marketing"
-              width={180}
-              height={72}
-              className="h-9 w-auto brightness-0 invert transition-opacity group-hover:opacity-80 md:h-10"
-              priority
-            />
+            <span className="text-xl font-bold tracking-wider text-foreground transition-opacity group-hover:opacity-80 md:text-2xl">
+              OLYMPIA
+            </span>
           </Link>
 
           {/* ─── Desktop links ─── */}

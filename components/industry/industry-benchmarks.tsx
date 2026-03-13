@@ -17,7 +17,7 @@ export function IndustryBenchmarks({ benchmarks, industryName }: IndustryBenchma
           <BarChart3 className="h-7 w-7 text-primary" />
         </div>
         <div>
-          <h3 className="text-2xl font-bold text-foreground">
+          <h3 className="font-heading text-2xl font-bold text-foreground">
             {industryName} Industry Benchmarks
           </h3>
           <p className="mt-1 text-sm text-muted-foreground">

@@ -1,110 +1,81 @@
 "use client"
 
-import Link from "next/link"
 import { motion } from "framer-motion"
-import { Phone, Mail, MapPin, Clock } from "lucide-react"
-
-const contactInfo = [
-  {
-    icon: Phone,
-    label: "Phone",
-    value: "(239) 308-4011",
-    href: "tel:2393084011",
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    value: "info@olympiamarketing.com",
-    href: "mailto:info@olympiamarketing.com",
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Southwest Florida",
-    href: null,
-  },
-  {
-    icon: Clock,
-    label: "Hours",
-    value: "Mon-Fri 9AM-6PM",
-    href: null,
-  },
-]
 
 export function ContactHero() {
   return (
-    <section className="relative overflow-hidden py-24 md:py-32">
+    <section
+      className="relative flex items-center justify-center overflow-hidden py-28 md:py-36"
+      style={{
+        background: "linear-gradient(to bottom, #0A0A14 0%, #1E1B3A 50%, #0A0A14 100%)",
+      }}
+    >
+      {/* Purple glow effects */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="aurora-blob absolute -left-1/4 -top-1/4 h-[500px] w-[500px] rounded-full bg-primary/10" />
-        <div className="aurora-blob absolute -right-1/4 bottom-0 h-[400px] w-[400px] rounded-full bg-accent/8" style={{ animationDelay: "-8s" }} />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,transparent_0%,var(--background)_70%)]" />
+        <div
+          className="absolute left-1/2 top-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60"
+          style={{
+            background: "radial-gradient(ellipse, #7C3AED20 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute -left-[100px] top-[100px] h-[300px] w-[300px] rounded-full opacity-40"
+          style={{
+            background: "radial-gradient(ellipse, #6D28D918 0%, transparent 100%)",
+          }}
+        />
+        <div
+          className="absolute -right-[60px] bottom-[80px] h-[250px] w-[350px] rounded-full opacity-50"
+          style={{
+            background: "radial-gradient(ellipse, #8B5CF615 0%, transparent 100%)",
+          }}
+        />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 md:px-8">
-        <motion.div
+      {/* Decorative particles */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-[15%] top-[25%] h-[3px] w-[3px] rounded-full bg-primary opacity-50" />
+        <div className="absolute right-[20%] top-[30%] h-[2px] w-[2px] rounded-full bg-[#A78BFA] opacity-40" />
+        <div className="absolute left-[30%] bottom-[30%] h-[4px] w-[4px] rounded-full bg-[#C4B5FD] opacity-25" />
+        <div className="absolute right-[35%] bottom-[25%] h-[2px] w-[2px] rounded-full bg-primary opacity-45" />
+      </div>
+
+      {/* Bottom accent line */}
+      <div
+        className="absolute bottom-0 left-0 h-[2px] w-full"
+        style={{
+          background: "linear-gradient(90deg, transparent 0%, #8B5CF6 50%, transparent 100%)",
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-4xl px-4 text-center md:px-8">
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="text-[11px] font-semibold uppercase tracking-[3px] text-primary"
         >
-          <p className="text-sm font-medium uppercase tracking-widest text-primary">
-            Get In Touch
-          </p>
-        </motion.div>
+          Contact Us
+        </motion.p>
 
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="mt-4 max-w-4xl text-4xl font-bold leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl"
+          className="font-heading mt-5 text-5xl font-semibold leading-[1.1] tracking-tight text-[#F5F3FF] md:text-7xl"
         >
-          Contact{" "}
-          <span className="gradient-text">Olympia Marketing</span>
+          Get In Touch
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-8 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg"
+          className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#A09CC0] md:text-lg"
         >
-          Ready to grow your business? We&rsquo;d love to hear from you. Reach out to us directly or fill out the form below and our team will get back to you within 24 hours.
+          Ready to grow your business? We&rsquo;d love to hear from you.
+          Reach out and our team will get back to you within 24 hours.
         </motion.p>
-
-        {/* Contact cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-        >
-          {contactInfo.map((info, i) => {
-            const content = (
-              <>
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 transition-all group-hover:bg-primary/20">
-                  <info.icon className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    {info.label}
-                  </p>
-                  <p className="mt-0.5 text-sm font-semibold text-foreground">
-                    {info.value}
-                  </p>
-                </div>
-              </>
-            )
-            const className = "glass group flex items-center gap-4 rounded-xl p-5 transition-all hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5"
-            return info.href ? (
-              <Link key={i} href={info.href} className={className}>
-                {content}
-              </Link>
-            ) : (
-              <div key={i} className={className}>
-                {content}
-              </div>
-            )
-          })}
-        </motion.div>
       </div>
     </section>
   )

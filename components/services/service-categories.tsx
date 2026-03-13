@@ -2,100 +2,266 @@
 
 import { motion } from "framer-motion"
 import { ScrollReveal } from "@/components/animations/scroll-reveal"
+import Link from "next/link"
 import {
-  Globe, BarChart3, UserCheck, Palette, FileText,
-  Search, Mail, Share2, MonitorSmartphone, Code2, Server,
-  DollarSign, PieChart, Microscope, Pencil, MessageSquare, Layers,
-  ShoppingBag,
+  TrendingUp,
+  Monitor,
+  Palette,
+  Video,
+  Share2,
+  Briefcase,
+  ArrowRight,
 } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 
-const categories = [
+interface ServiceCategory {
+  icon: LucideIcon
+  title: string
+  description: string
+  subServices: string[]
+  href: string
+}
+
+const categories: ServiceCategory[] = [
   {
-    title: "Digital Marketing",
-    items: [
-      { icon: Search, label: "SEO" },
-      { icon: Mail, label: "Email" },
-      { icon: Share2, label: "Social Media" },
-      { icon: BarChart3, label: "SEM" },
+    icon: TrendingUp,
+    title: "Digital Marketing & PPC",
+    description:
+      "Strategic paid and organic campaigns across search and social platforms, optimized for maximum ROI.",
+    subServices: [
+      "SEO",
+      "Local SEO",
+      "PPC",
+      "Email Marketing",
+      "Social Media",
+      "Search Engine Marketing",
     ],
+    href: "/marketing-advertising-services/digital-marketing",
   },
   {
-    title: "Websites & Website Design",
-    items: [
-      { icon: MonitorSmartphone, label: "Responsive Design" },
-      { icon: Code2, label: "WordPress" },
-      { icon: Server, label: "Hosting" },
+    icon: Monitor,
+    title: "Website Design & Development",
+    description:
+      "Bespoke websites that blend stunning aesthetics with conversion-focused architecture.",
+    subServices: [
+      "Responsive Design",
+      "WordPress",
+      "Web Apps",
+      "Hosting",
+      "Fast Load Times",
+      "Security",
     ],
+    href: "/marketing-advertising-services/websites",
   },
   {
-    title: "Fractional CMO",
-    items: [
-      { icon: DollarSign, label: "Monthly Investment" },
-      { icon: PieChart, label: "ROI" },
-      { icon: Microscope, label: "Deep Dive" },
+    icon: Palette,
+    title: "Branding & Corporate Identity",
+    description:
+      "Distinctive brand identities that resonate with your audience and elevate your market positioning.",
+    subServices: [
+      "Logo Design",
+      "Brand Messaging",
+      "Corporate ID",
+      "Print Collateral",
     ],
+    href: "/marketing-advertising-services/branding-corporate-id",
   },
   {
-    title: "Branding & Corporate ID",
-    items: [
-      { icon: Pencil, label: "Logo" },
-      { icon: MessageSquare, label: "Messaging" },
-      { icon: Layers, label: "Corporate ID" },
-      { icon: Palette, label: "Strategy" },
-    ],
+    icon: Video,
+    title: "Content & Video Production",
+    description:
+      "Compelling visual narratives and premium content that captivate audiences and build authority.",
+    subServices: ["Blogging", "Video Production", "Content Strategy"],
+    href: "/marketing-advertising-services/digital-marketing/content-marketing",
   },
   {
-    title: "Sales Support Materials",
-    items: [
-      { icon: FileText, label: "Brochures" },
-      { icon: ShoppingBag, label: "Print Collateral" },
-    ],
+    icon: Share2,
+    title: "Social Media Marketing",
+    description:
+      "Curated social presence that builds engaged communities and drives meaningful conversations.",
+    subServices: ["Social Media Management", "Community Building"],
+    href: "/marketing-advertising-services/digital-marketing/social-media-marketing",
   },
+  {
+    icon: Briefcase,
+    title: "Fractional CMO Services",
+    description:
+      "Executive-level marketing leadership on demand — strategic vision without the full-time commitment.",
+    subServices: ["Executive Marketing Leadership", "Strategic Planning"],
+    href: "/marketing-advertising-services/fractional-cmo",
+  },
+]
+
+const differentiators = [
+  {
+    title: "Data-Driven Strategy",
+    description:
+      "Every decision backed by analytics and real performance data — not guesswork.",
+  },
+  {
+    title: "Full-Service Integration",
+    description:
+      "All channels work together under one roof for maximum impact and consistent messaging.",
+  },
+  {
+    title: "Transparent Reporting",
+    description:
+      "Clear dashboards and regular reporting so you always know exactly where your investment goes.",
+  },
+  {
+    title: "Proven Track Record",
+    description:
+      "Battle-tested strategies across dozens of industries delivering measurable growth.",
+  },
+]
+
+const industries = [
+  "Medical & Healthcare",
+  "Real Estate",
+  "Home Services",
+  "SaaS & Technology",
+  "Beauty & Wellness",
+  "Legal & Professional",
+  "Restaurants & Hospitality",
+  "Construction & Roofing",
+  "Education",
+  "E-Commerce",
+  "Financial Services",
+  "Automotive",
 ]
 
 export function ServiceCategories() {
   return (
-    <section className="border-t border-border py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <ScrollReveal>
-          <p className="text-sm font-medium uppercase tracking-widest text-primary">
-            Full Suite
-          </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground md:text-5xl">
-            From Dreams to Reality
-          </h2>
-          <p className="mt-6 max-w-3xl text-base leading-relaxed text-muted-foreground">
-            We offer a comprehensive set of marketing and advertising services designed to take your business from where it is now to where you want it to be. Our integrated approach ensures every channel works together to maximize your results.
-          </p>
-        </ScrollReveal>
+    <>
+      {/* Service Category Cards */}
+      <section className="py-24 md:py-32">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <ScrollReveal>
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-[11px] font-semibold uppercase tracking-[3px] text-primary">
+                Our Expertise
+              </p>
+              <h2 className="font-heading mt-4 text-3xl font-semibold tracking-tight text-foreground md:text-[42px] md:leading-tight">
+                Full-Service Marketing Excellence
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                We craft bespoke marketing strategies that elevate brands,
+                combining data-driven insights with creative excellence to
+                deliver measurable results.
+              </p>
+            </div>
+          </ScrollReveal>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {categories.map((cat, i) => (
-            <ScrollReveal key={i} delay={i * 0.1}>
-              <motion.div
-                whileHover={{ y: -4 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="glass group flex h-full flex-col rounded-2xl p-8 transition-all hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5"
-              >
-                <h3 className="text-lg font-semibold text-foreground">
-                  {cat.title}
-                </h3>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  {cat.items.map((item, j) => (
-                    <div
-                      key={j}
-                      className="flex items-center gap-2 rounded-lg bg-secondary/50 px-3 py-2 text-xs font-medium text-secondary-foreground transition-all hover:bg-secondary"
-                    >
-                      <item.icon className="h-3.5 w-3.5 text-primary" />
-                      {item.label}
+          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {categories.map((cat, i) => (
+              <ScrollReveal key={cat.title} delay={i * 0.08}>
+                <Link href={cat.href} className="group block h-full">
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className="flex h-full flex-col rounded-[20px] border border-border bg-card p-7 transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
+                  >
+                    {/* Icon */}
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
+                      <cat.icon className="h-6 w-6 text-primary" />
                     </div>
-                  ))}
-                </div>
-              </motion.div>
-            </ScrollReveal>
-          ))}
+
+                    {/* Title */}
+                    <h3 className="font-heading mt-5 text-xl font-medium text-foreground">
+                      {cat.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      {cat.description}
+                    </p>
+
+                    {/* Sub-services tags */}
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {cat.subServices.map((sub) => (
+                        <span
+                          key={sub}
+                          className="rounded-full bg-secondary/50 px-3 py-1 text-[11px] font-medium text-secondary-foreground"
+                        >
+                          {sub}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Learn more */}
+                    <div className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                      Learn more
+                      <ArrowRight className="h-4 w-4" />
+                    </div>
+                  </motion.div>
+                </Link>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="border-t border-border py-24 md:py-32">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <ScrollReveal>
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-[11px] font-semibold uppercase tracking-[3px] text-primary">
+                Why Olympia
+              </p>
+              <h2 className="font-heading mt-4 text-3xl font-semibold tracking-tight text-foreground md:text-[42px] md:leading-tight">
+                Why Choose Us
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {differentiators.map((item, i) => (
+              <ScrollReveal key={item.title} delay={i * 0.1}>
+                <div className="flex h-full flex-col rounded-[20px] border border-border bg-card p-7">
+                  <h3 className="font-heading text-lg font-medium text-foreground">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {item.description}
+                  </p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Industry Specialization */}
+      <section className="border-t border-border py-24 md:py-32">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <ScrollReveal>
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-[11px] font-semibold uppercase tracking-[3px] text-primary">
+                Industries We Serve
+              </p>
+              <h2 className="font-heading mt-4 text-3xl font-semibold tracking-tight text-foreground md:text-[42px] md:leading-tight">
+                Industry Specialization
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                We bring deep expertise across a wide range of industries,
+                tailoring strategies to the unique challenges and opportunities
+                in each market.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {industries.map((industry, i) => (
+              <ScrollReveal key={industry} delay={i * 0.05}>
+                <div className="rounded-[14px] border border-border bg-card px-5 py-4 text-center text-sm font-medium text-foreground transition-all hover:border-primary/25 hover:shadow-sm hover:shadow-primary/5">
+                  {industry}
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   )
 }

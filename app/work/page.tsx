@@ -5,9 +5,15 @@ import { Testimonials } from "@/components/sections/testimonials"
 import { CtaSection } from "@/components/sections/cta-section"
 
 export const metadata: Metadata = {
-  title: "Olympia Marketing Case Studies: Healthcare, Beauty & Real Estate",
+  title: "Our Work & Case Studies | Marketing Portfolio",
   description:
-    "Explore our portfolio of successful marketing campaigns and case studies across healthcare, beauty, real estate, and more in Southwest Florida.",
+    "See real results from Olympia Marketing. Case studies and portfolio across healthcare, beauty, real estate, and more in Southwest Florida.",
+  openGraph: {
+    title: "Our Work & Portfolio | Olympia Marketing",
+    description:
+      "See real results from Olympia Marketing. Case studies and portfolio across healthcare, beauty, real estate, and more in Southwest Florida.",
+    type: "website",
+  },
 }
 
 export default function WorkPage() {

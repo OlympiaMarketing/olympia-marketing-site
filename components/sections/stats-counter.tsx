@@ -45,10 +45,10 @@ export function StatsCounter() {
 
       <div className="relative mx-auto max-w-7xl px-4 md:px-8">
         <ScrollReveal>
-          <p className="text-sm font-medium uppercase tracking-widest text-primary">
+          <p className="text-[11px] font-semibold uppercase tracking-[3px] text-primary">
             Proven Results
           </p>
-          <h2 className="mt-3 max-w-3xl text-3xl font-bold tracking-tight text-foreground text-balance md:text-5xl">
+          <h2 className="mt-3 max-w-3xl font-heading text-[42px] font-semibold text-foreground">
             Our Average Client Sees 10x Growth in the First Year
           </h2>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground">

@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Plus } from "lucide-react"
 
 export interface FaqItem {
   question: string
@@ -138,24 +139,39 @@ const homepageFaqs: FaqItem[] = [
 
 export function FaqAccordion({ faqs = homepageFaqs }: { faqs?: FaqItem[] }) {
   return (
-    <section className="border-t border-border py-24 md:py-32">
-      <div className="mx-auto max-w-4xl px-4 md:px-8">
+    <section className="relative overflow-hidden bg-background py-24 md:py-32">
+      {/* Subtle purple radial gradient at top */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-[500px]"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 50% 0%, hsl(var(--primary) / 0.08), transparent)",
+        }}
+      />
+
+      <div className="relative mx-auto max-w-3xl px-4 md:px-8">
         <ScrollReveal>
-          <h2 className="text-center text-3xl font-bold tracking-tight text-foreground md:text-5xl">
-            Frequently Asked Questions
-          </h2>
+          <div className="text-center">
+            <p className="text-primary text-[11px] font-semibold uppercase tracking-[3px]">
+              Frequently Asked Questions
+            </p>
+            <h2 className="font-heading mt-4 text-3xl tracking-tight text-foreground md:text-[42px] md:leading-[1.15]">
+              Got Questions? We&apos;ve Got Answers.
+            </h2>
+          </div>
         </ScrollReveal>
 
         <div className="mt-12">
-          <Accordion type="single" collapsible className="flex flex-col gap-3">
+          <Accordion type="single" collapsible className="flex flex-col">
             {faqs.map((faq, i) => (
               <ScrollReveal key={i} delay={Math.min(i * 0.03, 0.3)}>
                 <AccordionItem
                   value={`faq-${i}`}
-                  className="glass rounded-xl border-none px-6"
+                  className="border-border border-b"
                 >
-                  <AccordionTrigger className="text-left text-sm font-medium text-foreground hover:no-underline hover:text-primary py-5">
-                    {faq.question}
+                  <AccordionTrigger className="text-left text-sm font-medium text-foreground hover:no-underline hover:text-primary py-5 [&>svg]:hidden">
+                    <span className="flex-1">{faq.question}</span>
+                    <Plus className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 [[data-state=open]>&]:rotate-45" />
                   </AccordionTrigger>
                   <AccordionContent className="text-sm leading-relaxed text-muted-foreground pb-5">
                     {faq.answer}

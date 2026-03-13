@@ -24,10 +24,10 @@ export function IndustryCTA({ config, painPoints, industryName }: IndustryCTAPro
       <div className="relative grid gap-10 p-8 md:p-12 lg:grid-cols-2 lg:gap-16">
         {/* Left column - Pain points and value prop */}
         <div>
-          <p className="text-sm font-medium uppercase tracking-widest text-primary">
+          <p className="text-[11px] font-semibold uppercase tracking-[3px] text-primary">
             Built for {industryName} Businesses
           </p>
-          <h3 className="mt-4 text-3xl font-bold text-foreground md:text-4xl">
+          <h3 className="mt-4 font-heading text-3xl font-bold text-foreground md:text-4xl">
             {config.headline}
           </h3>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
