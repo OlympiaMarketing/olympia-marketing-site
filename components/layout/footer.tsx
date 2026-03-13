@@ -4,7 +4,7 @@ import { Phone, Mail, MapPin, Facebook, Youtube, Twitter } from "lucide-react"
 
 const serviceLinks = [
   { href: "/marketing-advertising-services", label: "All Services" },
-  { href: "/seo", label: "SEO" },
+  { href: "/marketing-advertising-services/digital-marketing/seo", label: "SEO" },
   { href: "/marketing-advertising-services/digital-marketing", label: "Digital Marketing & PPC" },
   { href: "/marketing-advertising-services/websites", label: "Website Design" },
   { href: "/marketing-advertising-services/digital-marketing/social-media-marketing", label: "Social Media Marketing" },
@@ -15,11 +15,11 @@ const serviceLinks = [
 
 const industryLinks = [
   { href: "/med-spa", label: "Medical Spa" },
-  { href: "/beauty-esthetician-marketing-advertising", label: "Salon & Beauty" },
-  { href: "/physical-therapy-marketing-advertising", label: "Physical Therapists" },
-  { href: "/real-estate-marketing-advertising", label: "Real Estate" },
+  { href: "/industries/beauty-esthetician-marketing-advertising", label: "Salon & Beauty" },
+  { href: "/industries/physical-therapy-marketing-advertising", label: "Physical Therapists" },
+  { href: "/industries/real-estate-marketing-advertising", label: "Real Estate" },
   { href: "/industries/home-service-businesses", label: "Home Services" },
-  { href: "/builders-developers", label: "Builders & Developers" },
+  { href: "/industries/builders-developers", label: "Builders & Developers" },
 ]
 
 const companyLinks = [

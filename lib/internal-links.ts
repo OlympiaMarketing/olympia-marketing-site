@@ -34,7 +34,7 @@ const LINK_TARGETS: LinkTarget[] = [
     weight: 10,
   },
   {
-    path: "seo",
+    path: "marketing-advertising-services/digital-marketing/seo",
     anchors: ["SEO", "search engine optimization", "SEO services", "SEO strategy"],
     weight: 9,
   },
@@ -89,17 +89,17 @@ const LINK_TARGETS: LinkTarget[] = [
     weight: 6,
   },
   {
-    path: "review-generation",
+    path: "marketing-advertising-services/digital-marketing/review-generation",
     anchors: ["review generation", "online reviews", "Google reviews"],
     weight: 5,
   },
   {
-    path: "reputation-management",
+    path: "marketing-advertising-services/digital-marketing/reputation-management",
     anchors: ["reputation management", "online reputation"],
     weight: 5,
   },
   {
-    path: "blogging",
+    path: "marketing-advertising-services/digital-marketing/blogging",
     anchors: ["blogging", "blog writing", "blog content"],
     weight: 5,
   },
@@ -111,27 +111,27 @@ const LINK_TARGETS: LinkTarget[] = [
     weight: 8,
   },
   {
-    path: "beauty-esthetician-marketing-advertising",
+    path: "industries/beauty-esthetician-marketing-advertising",
     anchors: ["salon marketing", "beauty marketing", "esthetician marketing", "salon advertising"],
     weight: 8,
   },
   {
-    path: "physical-therapy-marketing-advertising",
+    path: "industries/physical-therapy-marketing-advertising",
     anchors: ["physical therapy marketing", "PT marketing", "physical therapist advertising"],
     weight: 8,
   },
   {
-    path: "real-estate-marketing-advertising",
+    path: "industries/real-estate-marketing-advertising",
     anchors: ["real estate marketing", "real estate advertising", "realtor marketing"],
     weight: 8,
   },
   {
-    path: "builders-developers",
+    path: "industries/builders-developers",
     anchors: ["builder marketing", "developer marketing", "construction marketing", "contractor marketing"],
     weight: 7,
   },
   {
-    path: "beauty-school-marketing",
+    path: "industries/beauty-school-marketing",
     anchors: ["beauty school marketing", "cosmetology school marketing", "beauty school advertising"],
     weight: 7,
   },
@@ -146,7 +146,7 @@ const LINK_TARGETS: LinkTarget[] = [
     weight: 7,
   },
   {
-    path: "roofing-contractor-marketing",
+    path: "industries/roofing-contractor-marketing",
     anchors: ["roofing marketing", "roofer marketing", "roofing contractor advertising"],
     weight: 7,
   },

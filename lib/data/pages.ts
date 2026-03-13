@@ -48,7 +48,8 @@ const SERVICE_SLUGS = new Set([
   'websites', 'hosting-and-maintenance', 'daily-backups', 'top-tier-security',
   'fast-load-times', 'ongoing-upgrades', 'support', 'account-management',
   'marketing-advertising-services', 'marketing-advertising', 'saas-marketing',
-  'support-process',
+  'support-process', 'ai-services', 'ai-engine-optimization',
+  'ai-development', 'ai-agentic-setup',
 ]);
 
 const INDUSTRY_SLUGS = new Set([
@@ -112,6 +113,10 @@ const CATEGORY_MAP: Record<string, string[]> = {
   'social-media-marketing': ['digital-marketing'],
   'email-marketing': ['digital-marketing'],
   'saas-marketing': ['digital-marketing'],
+  'ai-services': ['digital-marketing', 'seo'],
+  'ai-engine-optimization': ['digital-marketing', 'seo'],
+  'ai-development': ['digital-marketing'],
+  'ai-agentic-setup': ['digital-marketing'],
 };
 
 function classifyPage(slug: string): PageType {
