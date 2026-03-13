@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { ServicesHero } from "@/components/services/services-hero"
 import { ServiceCategories } from "@/components/services/service-categories"
+import { StatsCounter } from "@/components/sections/stats-counter"
+import { Testimonials } from "@/components/sections/testimonials"
 import { CtaSection } from "@/components/sections/cta-section"
 
 export const metadata: Metadata = {
@@ -19,7 +21,9 @@ export default function ServicesPage() {
   return (
     <>
       <ServicesHero />
+      <StatsCounter />
       <ServiceCategories />
+      <Testimonials />
       <CtaSection />
     </>
   )

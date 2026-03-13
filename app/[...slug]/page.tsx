@@ -22,6 +22,8 @@ import { IndustryBenchmarks } from "@/components/industry/industry-benchmarks"
 import { getIndustryConfig } from "@/components/industry/industry-config"
 import { IndustryTemplate } from "@/components/industry/industry-template"
 import { getIndustryTemplateData } from "@/components/industry/industry-template-data"
+import { getServiceConversionConfig } from "@/components/services/service-conversion-config"
+import { Phone, Star, Shield, CheckCircle, Quote } from "lucide-react"
 
 // ---------------------------------------------------------------------------
 // Static generation
@@ -477,6 +479,7 @@ function RelatedPostsSidebar({ posts }: { posts: Post[] }) {
 
 function ServiceLayout({ page, relatedPosts }: { page: Page; relatedPosts: Post[] }) {
   const serviceName = page.title
+  const config = getServiceConversionConfig(page.full_path)
 
   return (
     <>
@@ -507,56 +510,144 @@ function ServiceLayout({ page, relatedPosts }: { page: Page; relatedPosts: Post[
               ))}
             </div>
           </section>
+
+          {/* Page-specific testimonial */}
+          {config && (
+            <section className="mt-12 rounded-2xl border border-border bg-card p-8 lg:p-10">
+              <div className="flex items-start gap-4">
+                <Quote className="h-8 w-8 shrink-0 text-primary/30" />
+                <div>
+                  <div className="flex gap-0.5 mb-3">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="h-4 w-4 fill-accent text-accent" />
+                    ))}
+                  </div>
+                  <blockquote className="text-base leading-relaxed text-foreground">
+                    &ldquo;{config.testimonial.quote}&rdquo;
+                  </blockquote>
+                  <div className="mt-4 flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary/30 to-accent/20 text-sm font-bold text-foreground ring-2 ring-primary/20">
+                      {config.testimonial.initials}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">{config.testimonial.name}</p>
+                      <p className="text-xs text-muted-foreground">{config.testimonial.title}</p>
+                    </div>
+                  </div>
+                  <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                    <CheckCircle className="h-3.5 w-3.5" />
+                    {config.testimonial.resultStat}
+                  </p>
+                </div>
+              </div>
+            </section>
+          )}
         </div>
 
         {/* Sidebar */}
-        <aside className="space-y-8">
-          {/* CTA Card */}
+        <aside className="space-y-6">
+          {/* Primary CTA Card */}
           <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6">
             <h3 className="font-heading text-lg font-semibold text-foreground">
-              Get a Free {serviceName} Audit
+              {config?.sidebarHeading ?? `Get a Free ${serviceName} Audit`}
             </h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Discover opportunities to grow your business with a custom strategy.
+              {config?.sidebarDescription ?? "Discover opportunities to grow your business with a custom strategy."}
             </p>
             <Link
               href="/contact"
-              className="mt-4 inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
+              className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
             >
-              Request Yours Free <ArrowRight className="h-4 w-4" />
+              {config?.ctaCopy ?? "Request Yours Free"} <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href="tel:2393084011"
+              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-all hover:border-primary/40 hover:bg-primary/5"
+            >
+              <Phone className="h-3.5 w-3.5 text-primary" />
+              (239) 308-4011
             </Link>
           </div>
+
+          {/* Stat highlight card */}
+          {config && (
+            <div className="rounded-2xl border border-border bg-card p-6 text-center">
+              <p className="text-3xl font-bold text-primary">{config.statHighlight.value}</p>
+              <p className="mt-1 text-sm font-semibold text-foreground">{config.statHighlight.label}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{config.statHighlight.description}</p>
+            </div>
+          )}
+
+          {/* Guarantee badge */}
+          {config?.guaranteeBadge && (
+            <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4">
+              <Shield className="h-8 w-8 shrink-0 text-primary" />
+              <div>
+                <p className="text-sm font-semibold text-foreground">100% Money-Back Guarantee</p>
+                <p className="text-xs text-muted-foreground">We stand behind our work — guaranteed results or your money back.</p>
+              </div>
+            </div>
+          )}
+
+          {/* Lead magnet card */}
+          {config && (
+            <div className="rounded-2xl border border-accent/20 bg-accent/5 p-5">
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-accent">Free Resource</p>
+              <h4 className="mt-2 text-sm font-semibold text-foreground">{config.leadMagnet.title}</h4>
+              <p className="mt-1 text-xs text-muted-foreground">{config.leadMagnet.description}</p>
+              <Link
+                href="/contact"
+                className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+              >
+                Get it free <ArrowRight className="h-3 w-3" />
+              </Link>
+            </div>
+          )}
 
           {/* Related Posts */}
           <RelatedPostsSidebar posts={relatedPosts} />
         </aside>
       </div>
 
+      {/* Urgency banner */}
+      {config && (
+        <div className="mt-12 rounded-xl border border-accent/20 bg-accent/5 px-6 py-4">
+          <p className="text-sm font-medium text-foreground">{config.urgencyHook}</p>
+        </div>
+      )}
+
       {/* Bottom CTA */}
       <div
-        className="mt-16 rounded-2xl p-10 text-center"
+        className="mt-8 rounded-2xl p-10 text-center"
         style={{ background: 'linear-gradient(135deg, #6D28D9 0%, #1E1B3A 100%)' }}
       >
         <h2 className="font-heading text-3xl font-bold text-white">
           Ready to Transform Your {serviceName}?
         </h2>
         <p className="mt-3 text-base text-white/70">
-          Schedule your free strategy call and get a custom roadmap.
+          {config?.ctaSubtext ?? "Schedule your free strategy call and get a custom roadmap."}
         </p>
-        <div className="mt-6 flex items-center justify-center gap-4">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-[#6D28D9] transition-all hover:bg-white/90"
           >
-            Get Started <ArrowRight className="h-4 w-4" />
+            {config?.ctaCopy ?? "Get Started"} <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             href="tel:2393084011"
             className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-white/10"
           >
+            <Phone className="h-4 w-4" />
             (239) 308-4011
           </Link>
         </div>
+        {config?.guaranteeBadge && (
+          <p className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-white/60">
+            <Shield className="h-3.5 w-3.5" />
+            Backed by our 100% money-back guarantee
+          </p>
+        )}
       </div>
     </>
   )
