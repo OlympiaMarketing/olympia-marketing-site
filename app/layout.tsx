@@ -1,12 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import { Inter, Cormorant_Garamond } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
-import { Navbar } from "@/components/layout/navbar"
-import { Footer } from "@/components/layout/footer"
-import { ScrollProgress } from "@/components/animations/scroll-progress"
-import { StickyCta } from "@/components/layout/sticky-cta"
-import { JsonLd } from "@/components/seo/json-ld"
-import { getOrganizationSchema, getWebSiteSchema } from "@/lib/schema"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
@@ -52,16 +46,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`dark ${inter.variable} ${cormorant.variable}`}>
-      <head>
-        <JsonLd data={getOrganizationSchema()} />
-        <JsonLd data={getWebSiteSchema()} />
-      </head>
-      <body className="noise-bg font-sans antialiased">
-        <ScrollProgress />
-        <Navbar />
-        <main className="min-h-screen pt-[72px]">{children}</main>
-        <Footer />
-        <StickyCta />
+      <body className="font-sans antialiased">
+        {children}
         <Analytics />
       </body>
     </html>
